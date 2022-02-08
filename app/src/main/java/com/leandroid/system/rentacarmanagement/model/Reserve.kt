@@ -1,4 +1,4 @@
-package com.leandroid.system.rentacarmanagement.data
+package com.leandroid.system.rentacarmanagement.model
 
 data class Reserve(
     val id: String,

@@ -1,4 +1,4 @@
-package com.leandroid.system.rentacarmanagement.data
+package com.leandroid.system.rentacarmanagement.model
 
 data class User (
     val id: String,
@@ -9,5 +9,4 @@ data class User (
     val createDate: String,
     val updateDate: String,
     val deleteDate: String
-
-        )
+    )
