@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/leand/AndroidStudioProjects/RentACarManagement/app/src/main/res/layout/fragment_car.xml" value="0.22" />
+        <entry key="..\:/Users/leand/AndroidStudioProjects/RentACarManagement/app/src/main/res/layout/content_home.xml" value="0.1" />
+        <entry key="..\:/Users/leand/AndroidStudioProjects/RentACarManagement/app/src/main/res/layout/fragment_car.xml" value="0.21065989847715735" />
       </map>
     </option>
   </component>

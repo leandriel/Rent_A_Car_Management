@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.leandroid.system.rentacarmanagement.R
 
 class CarFragment : Fragment() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

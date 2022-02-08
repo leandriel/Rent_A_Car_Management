@@ -6,21 +6,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.car.CarFragment">
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/svCar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rvCar"
-        />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvCar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/svCar"
+        android:id="@+id/rv_car"
+        android:layout_width="@dimen/zero_default"
+        android:layout_height="@dimen/zero_default"
+        app:layout_constraintTop_toTopf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
