@@ -1,6 +1,6 @@
 package com.leandroid.system.rentacarmanagement.model
 
-data class Reserve(
+data class Booking(
     val id: String,
     val car: Car,
     val fly: String,
