@@ -17,5 +17,7 @@
     <!--MENU-->
     <string name="action_search">Search</string>
     <string name="search_hint">Buscar por marca</string>
+    <string name="error_description">Error</string>
+    <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
 
 </resources>
