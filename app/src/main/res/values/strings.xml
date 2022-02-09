@@ -17,5 +17,6 @@
     <!--MENU-->
     <string name="action_search">Search</string>
     <string name="search_hint">Buscar por marca</string>
+    <string name="image_description">Auto</string>
 
 </resources>
