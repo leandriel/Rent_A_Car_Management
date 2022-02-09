@@ -5,5 +5,6 @@ data class Car(
     val number: String,
     val model: String,
     val brand: Brand,
-    val active: Boolean
+    val active: Boolean,
+    val comment: String
 )
