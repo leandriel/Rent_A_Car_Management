@@ -6,6 +6,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.car.CarFragment">
 
+    <include
+        android:id="@+id/i_progress_bar"
+        layout="@layout/progress_bar" />
+    <include
+        android:id="@+id/i_generic_error"
+        layout="@layout/generic_error" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_car"
         android:layout_width="@dimen/zero_default"
