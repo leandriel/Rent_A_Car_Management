@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.ui.home.HomeCarViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 
@@ -21,6 +23,7 @@ class CarFragment : Fragment(), CarListener {
     private lateinit var carAdapter: CarAdapter
     private val repository = CarRepositoryImpl(CarDataSourceImpl())
     private lateinit var viewModel: CarViewModel
+    private val homeCarViewModel: HomeCarViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,7 @@ class CarFragment : Fragment(), CarListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        // CarDialogFragment.newInstance("").show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
+        //
     }
 
     private fun setUpObserverViewModel() {
@@ -53,6 +56,19 @@ class CarFragment : Fragment(), CarListener {
             }
             carDTO.observe(requireActivity()) { items ->
                 //adapter.setItems(items)
+            }
+        }
+        with(homeCarViewModel){
+            searchText.observe(requireActivity()) { text ->
+
+            }
+            isCreate.observe(requireActivity()) { isCreate ->
+                isCreate.getContentIfNotHandled()?.let {
+                    if(it){
+                        openCarFragmentDialog()
+                    }
+                }
+
             }
         }
     }
@@ -117,5 +133,9 @@ class CarFragment : Fragment(), CarListener {
 
     override fun onClick(id: String) {
 
+    }
+
+    private fun openCarFragmentDialog(id: String = ""){
+        CarDialogFragment.newInstance(id).show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
     }
 }

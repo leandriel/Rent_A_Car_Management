@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
-import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarDialogBinding
 
 class CarDialogFragment : DialogFragment() {
@@ -38,6 +37,10 @@ class CarDialogFragment : DialogFragment() {
         requireDialog().window?.setWindowAnimations(
             R.style.DialogAnimation
         )
+
+        binding.btnClosed.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onDestroyView() {
