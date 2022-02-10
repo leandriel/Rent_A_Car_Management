@@ -42,15 +42,18 @@ class CarFragment : Fragment(), CarListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        CarDialogFragment.newInstance("").show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
+        // CarDialogFragment.newInstance("").show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
     }
 
     private fun setUpObserverViewModel() {
-        viewModel.cars.observe(this) { state ->
-            handleUiCars(state)
-        }
-        viewModel.carDTO.observe(this) { items ->
-            //adapter.setItems(items)
+        with(viewModel) {
+            getCars()
+            cars.observe(requireActivity()) { state ->
+                handleUiCars(state)
+            }
+            carDTO.observe(requireActivity()) { items ->
+                //adapter.setItems(items)
+            }
         }
     }
 

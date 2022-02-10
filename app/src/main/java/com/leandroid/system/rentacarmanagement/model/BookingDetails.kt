@@ -14,7 +14,7 @@ data class BookingDetails(
                 ""
             ),
             false,
-            "",
+            Color("", ""),
         ""),
         mutableListOf()
     )
