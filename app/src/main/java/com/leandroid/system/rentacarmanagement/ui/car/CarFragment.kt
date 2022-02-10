@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +14,7 @@ import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.ui.home.HomeCarViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 
@@ -20,6 +23,7 @@ class CarFragment : Fragment(), CarListener {
     private lateinit var carAdapter: CarAdapter
     private val repository = CarRepositoryImpl(CarDataSourceImpl())
     private lateinit var viewModel: CarViewModel
+    private val homeCarViewModel: HomeCarViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,13 +32,12 @@ class CarFragment : Fragment(), CarListener {
             CarViewModelFactory(repository)
         ).get(CarViewModel::class.java)
         setUpObserverViewModel()
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCarBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,17 +45,33 @@ class CarFragment : Fragment(), CarListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        //
     }
 
     private fun setUpObserverViewModel() {
-        viewModel.cars.observe(this) { state ->
-            handleUiCars(state)
+        with(viewModel) {
+            getCars()
+            cars.observe(requireActivity()) { state ->
+                handleUiCars(state)
+            }
+            carDTO.observe(requireActivity()) { items ->
+                //adapter.setItems(items)
+            }
         }
-        viewModel.carDTO.observe(this) { items ->
-            //adapter.setItems(items)
+        with(homeCarViewModel){
+            searchText.observe(requireActivity()) { text ->
+
+            }
+            isCreate.observe(requireActivity()) { isCreate ->
+                isCreate.getContentIfNotHandled()?.let {
+                    if(it){
+                        openCarFragmentDialog()
+                    }
+                }
+
+            }
         }
     }
-
 
     private fun initRecyclerView() {
         carAdapter = CarAdapter(this)
@@ -114,5 +133,9 @@ class CarFragment : Fragment(), CarListener {
 
     override fun onClick(id: String) {
 
+    }
+
+    private fun openCarFragmentDialog(id: String = ""){
+        CarDialogFragment.newInstance(id).show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
     }
 }

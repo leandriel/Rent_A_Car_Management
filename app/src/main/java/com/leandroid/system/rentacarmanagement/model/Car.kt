@@ -6,9 +6,9 @@ data class Car(
     val model: String,
     val brand: Brand,
     val active: Boolean,
-    val color: String,
+    val color: Color,
     val comment: String
 ){
     val carDetails: String
-      get() = "${brand.name} $model $color - $patent".uppercase()
+      get() = "${brand.name} $model ${color.name} - $patent".uppercase()
 }
