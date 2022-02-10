@@ -7,8 +7,6 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-
-
     <string name="menu_home">Home</string>
     <string name="menu_cars">Autos</string>
     <string name="menu_slideshow">Slideshow</string>
@@ -18,7 +16,6 @@
     <string name="search_hint">Buscar por marca</string>
     <string name="error_description">Error</string>
     <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="image_description">Auto</string>
 
 </resources>

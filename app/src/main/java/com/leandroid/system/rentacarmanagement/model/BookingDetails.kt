@@ -14,8 +14,8 @@ data class BookingDetails(
                 ""
             ),
             false,
-            ""
-        ),
+            "",
+        ""),
         mutableListOf()
     )
 }

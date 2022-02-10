@@ -16,14 +16,18 @@ import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 
-class CarFragment : Fragment() {
+class CarFragment : Fragment(), CarListener {
     private lateinit var binding: FragmentCarBinding
+    private lateinit var carAdapter: CarAdapter
     private val repository = CarRepositoryImpl(CarDataSourceImpl())
     private lateinit var viewModel: CarViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity(), CarViewModelFactory(repository))[CarViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            CarViewModelFactory(repository)
+        ).get(CarViewModel::class.java)
         setUpObserverViewModel()
     }
 
@@ -41,7 +45,7 @@ class CarFragment : Fragment() {
         CarDialogFragment.newInstance("").show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
     }
 
-    private fun setUpObserverViewModel(){
+    private fun setUpObserverViewModel() {
         viewModel.cars.observe(this) { state ->
             handleUiCars(state)
         }
@@ -50,27 +54,28 @@ class CarFragment : Fragment() {
         }
     }
 
-    private fun initRecyclerView(){
+    private fun initRecyclerView() {
+        carAdapter = CarAdapter(this)
         val linearLayoutManager = getLinearLayoutManager()
         with(binding.rvCar) {
             layoutManager = linearLayoutManager
-            //adapter = adapter
+            adapter = carAdapter
             addItemDecoration(getDividerItemDecoration(linearLayoutManager))
         }
     }
 
     private fun getLinearLayoutManager() = LinearLayoutManager(requireContext())
 
-    private fun getDividerItemDecoration(linearLayoutManager: LinearLayoutManager) =  DividerItemDecoration(
-        requireContext(),
-        linearLayoutManager.orientation
-    )
+    private fun getDividerItemDecoration(linearLayoutManager: LinearLayoutManager) =
+        DividerItemDecoration(
+            requireContext(),
+            linearLayoutManager.orientation
+        )
 
     private fun handleUiCars(uiState: DataState<MutableList<Car>>) {
         when (uiState) {
             is DataState.Success<MutableList<Car>> -> {
-               // adapter() uiState.data
-                //hideProgress()
+                carAdapter.setCars(uiState.data)
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)
                 handlerRecyclerVisibility(true)
@@ -89,21 +94,25 @@ class CarFragment : Fragment() {
         }
     }
 
-    private fun handlerProgressBarVisibility(show: Boolean){
-        with(binding){
-            iProgressBar.progressBar.visibility = if(show) View.VISIBLE else View.GONE
+    private fun handlerProgressBarVisibility(show: Boolean) {
+        with(binding) {
+            iProgressBar.progressBar.visibility = if (show) View.VISIBLE else View.GONE
         }
     }
 
-    private fun handlerRecyclerVisibility(show: Boolean){
-        with(binding){
-            rvCar.visibility = if(show) View.VISIBLE else View.GONE
+    private fun handlerRecyclerVisibility(show: Boolean) {
+        with(binding) {
+            rvCar.visibility = if (show) View.VISIBLE else View.GONE
         }
     }
 
-    private fun handlerErrorVisibility(show: Boolean){
-        with(binding){
-            iGenericError.clGenericError.visibility = if(show) View.VISIBLE else View.GONE
+    private fun handlerErrorVisibility(show: Boolean) {
+        with(binding) {
+            iGenericError.clGenericError.visibility = if (show) View.VISIBLE else View.GONE
         }
+    }
+
+    override fun onClick(id: String) {
+
     }
 }

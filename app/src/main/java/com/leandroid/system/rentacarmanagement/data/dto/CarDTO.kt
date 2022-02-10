@@ -17,6 +17,7 @@ data class CarDTO(
                 ""
             ),
             false,
+            "",
             ""
         ),
         mutableListOf()
