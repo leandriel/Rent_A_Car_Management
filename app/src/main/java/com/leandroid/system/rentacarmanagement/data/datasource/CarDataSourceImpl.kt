@@ -6,7 +6,7 @@ import com.leandroid.system.rentacarmanagement.model.Brand
 import com.leandroid.system.rentacarmanagement.model.Car
 
 class CarDataSourceImpl: CarDataSource {
-    private val cars = mutableListOf<Car>()
+    private val cars = mutableListOf<Car>(Car("1","asd321","ka",Brand("brandID","brandName"),true,"rojo","asdasd"))
     private val brands = mutableListOf<Brand>(Brand("1", "FORD"), Brand("1", "FIAT"), Brand("1", "HONDA"))
     override fun getCars(): ApiResponse<MutableList<Car>> {
         return ApiResponse(200, true, "Autos", cars)

@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/tv_details"
-        android:layout_margin="4dp"
+        android:padding="@dimen/four_dp"
         style="@style/TextAppearance.AppCompat.Large"
         android:layout_width="0dp"
         android:ellipsize="end"
@@ -39,7 +39,7 @@
         android:layout_width="0dp"
         style="@style/TextAppearance.AppCompat.Caption"
         android:ellipsize="end"
-        android:layout_margin="4dp"
+        android:padding="@dimen/four_dp"
         android:layout_height="wrap_content"
         tools:text="Hola soy un comentario"
         app:layout_constraintBottom_toBottomOf="parent"

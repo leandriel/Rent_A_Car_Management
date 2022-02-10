@@ -13,7 +13,8 @@ class CarViewHolder(view: View, private val listener: CarListener) : RecyclerVie
             listener.onClick(car.id)
         }
 
-        binding.tvMark.text = car.originalTitle
-        Picasso.get().load(movie.urlImage).into(binding.movieImage)
+        binding.tvDetails.text = car.carDetails
+        binding.tvComment.text = car.comment
+//        Picasso.get().load(movie.urlImage).into(binding.movieImage)
     }
 }
