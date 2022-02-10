@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.car.CarDialogFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_actions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ed_comment"
+            tools:text="Save" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/btn_actions"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_color" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/ed_license_plate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/ed_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_color" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/ed_license_plate"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_brand" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/sp_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!--    &lt;!&ndash; The primary full-screen view. This can be replaced with whatever view-->
+    <!--         is needed to present your content, e.g. VideoView, SurfaceView,-->
+    <!--         TextureView, etc. &ndash;&gt;-->
+    <!--    <FrameLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:fitsSystemWindows="true">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:id="@+id/fullscreen_content_controls"-->
+    <!--            style="@style/Widget.Theme.RentACarManagement.ButtonBar.Fullscreen"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_gravity="bottom|center_horizontal"-->
+    <!--            android:orientation="horizontal"-->
+    <!--            tools:ignore="UselessParent">-->
+
+    <!--            <Button-->
+    <!--                android:id="@+id/dummy_button"-->
+    <!--                style="?android:attr/buttonBarButtonStyle"-->
+    <!--                android:layout_width="0dp"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_weight="1"-->
+    <!--                android:text="@string/dummy_button" />-->
+
+    <!--        </LinearLayout>-->
+    <!--    </FrameLayout>-->
+
+    <!--    &lt;!&ndash; This FrameLayout insets its children based on system windows using-->
+    <!--         android:fitsSystemWindows. &ndash;&gt;-->
+    <!--    <TextView-->
+    <!--        android:id="@+id/fullscreen_content"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:gravity="center"-->
+    <!--        android:keepScreenOn="true"-->
+    <!--        android:text="@string/dummy_content"-->
+    <!--        android:textColor="?attr/fullscreenTextColor"-->
+    <!--        android:textSize="50sp"-->
+    <!--        android:textStyle="bold" />-->
+
+</FrameLayout>

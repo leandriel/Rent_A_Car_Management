@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,14 +23,14 @@ class CarFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity(), CarViewModelFactory(repository)).get(CarViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), CarViewModelFactory(repository))[CarViewModel::class.java]
         setUpObserverViewModel()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCarBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -37,6 +38,7 @@ class CarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
+        CarDialogFragment.newInstance("").show(childFragmentManager, CarDialogFragment.CAR_DIALOG_FRAGMENT_FLAG)
     }
 
     private fun setUpObserverViewModel(){
@@ -47,7 +49,6 @@ class CarFragment : Fragment() {
             //adapter.setItems(items)
         }
     }
-
 
     private fun initRecyclerView(){
         val linearLayoutManager = getLinearLayoutManager()
