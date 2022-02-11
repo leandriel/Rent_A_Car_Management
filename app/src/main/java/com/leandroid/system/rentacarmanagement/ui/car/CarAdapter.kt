@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leandroid.system.rentacarmanagement.R
+import com.leandroid.system.rentacarmanagement.databinding.ItemCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
-
 class CarAdapter(private val listener: CarListener) : RecyclerView.Adapter<CarViewHolder>() {
+
     private var cars: MutableList<Car> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
@@ -17,6 +18,9 @@ class CarAdapter(private val listener: CarListener) : RecyclerView.Adapter<CarVi
     override fun onBindViewHolder(holderCar: CarViewHolder, position: Int) {
         val item = cars[position]
         holderCar.bind(item)
+        binding.textViewOptions.setOnClickListener {
+            optionsMenuClickListener.onOptionsMenuClicked(position)
+        }
     }
 
     override fun getItemCount(): Int = cars.size
