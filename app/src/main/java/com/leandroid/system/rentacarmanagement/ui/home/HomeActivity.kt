@@ -2,6 +2,7 @@ package com.leandroid.system.rentacarmanagement.ui.home
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import com.google.android.material.navigation.NavigationView
@@ -21,7 +22,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
-    private val searchViewModel: SearchViewModel by viewModels()
+    private val homeCarViewModel: HomeCarViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,16 +69,20 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.home, menu)
-
         val menuItem = menu.findItem(R.id.action_search)
         (menuItem.actionView as SearchView).apply {
             queryHint = getString(R.string.search_hint)
             setOnQueryTextListener(this@HomeActivity)
         }
-
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.action_create -> homeCarViewModel.create()
+        }
+        return super.onOptionsItemSelected(item)
+    }
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_home)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
@@ -90,7 +95,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(text: String?): Boolean {
          text?.let {
-             searchViewModel.setSearchText(text)
+             homeCarViewModel.setSearchText(text)
          }
         return false
     }
