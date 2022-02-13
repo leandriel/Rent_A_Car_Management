@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leandroid.system.rentacarmanagement.R
-import com.leandroid.system.rentacarmanagement.databinding.ItemCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+
 class CarAdapter(private val listener: CarListener) : RecyclerView.Adapter<CarViewHolder>() {
 
+    private var originCars: MutableList<Car> = mutableListOf()
     private var cars: MutableList<Car> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CarViewHolder {
@@ -18,14 +19,22 @@ class CarAdapter(private val listener: CarListener) : RecyclerView.Adapter<CarVi
     override fun onBindViewHolder(holderCar: CarViewHolder, position: Int) {
         val item = cars[position]
         holderCar.bind(item)
-        binding.textViewOptions.setOnClickListener {
-            optionsMenuClickListener.onOptionsMenuClicked(position)
-        }
+    }
+
+    fun getItemByPosition(position: Int) = cars[position]
+
+    fun filterByBrand(text: String) {
+        if(text.isEmpty())
+            cars = originCars
+        else
+            cars = originCars.filter { it.brand.name.contains(text) }.toMutableList()
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int = cars.size
 
     fun setCars(cars: MutableList<Car>) {
+        this.originCars = cars
         this.cars = cars
         notifyDataSetChanged()
     }

@@ -18,5 +18,10 @@
     <string name="error_description">Error</string>
     <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
     <string name="image_description">Auto</string>
+    <string name="menu_popup_edit_title">Editar</string>
+    <string name="menu_popup_delete_title">Eliminar</string>
+    <string name="delete_car_message_dialog">Desea eliminar el auto?</string>
+    <string name="accept_title">Aceptar</string>
+    <string name="cancel_title">cancelar</string>
 
 </resources>

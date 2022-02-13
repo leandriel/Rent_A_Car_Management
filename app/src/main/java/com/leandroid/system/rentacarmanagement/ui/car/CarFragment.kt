@@ -10,11 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.ui.home.HomeCarViewModel
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 
@@ -60,8 +62,9 @@ class CarFragment : Fragment(), CarListener {
         }
         with(homeCarViewModel){
             searchText.observe(requireActivity()) { text ->
-
+                carAdapter.filterByBrand(text)
             }
+
             isCreate.observe(requireActivity()) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
                     if(it){
@@ -132,7 +135,25 @@ class CarFragment : Fragment(), CarListener {
     }
 
     override fun onClick(id: String) {
+      //gotodetail
+    }
 
+    override fun onMenuClickEdit(position: Int) {
+        val car = carAdapter.getItemByPosition(position)
+        openCarFragmentDialog(car.id)
+    }
+
+    override fun onMenuClickDelete(position: Int) {
+        val car = carAdapter.getItemByPosition(position)
+        ComponentUtils.showDialog(requireContext(), getString(R.string.delete_car_message_dialog), getString(
+                    R.string.accept_title), getString(R.string.cancel_title)
+        ) {
+            deleteCar(car.id)
+        }
+    }
+
+    private fun deleteCar(id: String) {
+        viewModel.deleteCar(id)
     }
 
     private fun openCarFragmentDialog(id: String = ""){
