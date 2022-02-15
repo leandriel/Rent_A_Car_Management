@@ -15,7 +15,7 @@ class CarDataSourceImpl: CarDataSource {
     }
 
     override fun getCar(id: String): ApiResponse<CarDTO> {
-        return ApiResponse(200, true, "Auto", CarDTO(cars.random(), brands, colors))
+        return ApiResponse(200, true, "Auto", CarDTO(cars.find { it.id == id } ?: Car(), brands, colors))
     }
 
     override fun saveCar(car: Car): ApiResponse<MutableList<Car>> {

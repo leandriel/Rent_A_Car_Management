@@ -10,18 +10,7 @@ data class CarDTO(
     val colors: MutableList<Color>
 ) {
     constructor() : this(
-        Car(
-            "",
-            "",
-            "",
-            Brand(
-                "",
-                ""
-            ),
-            false,
-            Color("", ""),
-            ""
-        ),
+        Car(),
         mutableListOf(),
         mutableListOf()
     )

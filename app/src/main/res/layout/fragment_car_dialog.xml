@@ -10,9 +10,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.car.CarDialogFragment">
 
+    <include
+        android:id="@+id/i_progress_bar"
+        layout="@layout/progress_bar" />
+    <include
+        android:id="@+id/i_generic_error"
+        layout="@layout/generic_error" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="@dimen/four_dp"
         android:background="@color/light_gray">
 
         <androidx.appcompat.widget.AppCompatImageButton
@@ -31,6 +40,7 @@
             android:id="@+id/sp_brand"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/black"
             app:layout_constraintBottom_toTopOf="@+id/sp_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +50,7 @@
             android:id="@+id/sp_color"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/black"
             app:layout_constraintBottom_toTopOf="@+id/ed_model"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

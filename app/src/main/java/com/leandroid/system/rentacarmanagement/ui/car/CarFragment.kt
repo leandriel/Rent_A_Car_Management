@@ -56,9 +56,6 @@ class CarFragment : Fragment(), CarListener {
             cars.observe(requireActivity()) { state ->
                 handleUiCars(state)
             }
-            carDTO.observe(requireActivity()) { items ->
-                //adapter.setItems(items)
-            }
         }
         with(homeCarViewModel){
             searchText.observe(requireActivity()) { text ->

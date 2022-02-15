@@ -9,6 +9,7 @@ data class Car(
     val color: Color,
     val comment: String
 ){
+    constructor(): this("", "", "", Brand(), false, Color(), "")
     val carDetails: String
       get() = "${brand.name} $model ${color.name} - $patent".uppercase()
 }
