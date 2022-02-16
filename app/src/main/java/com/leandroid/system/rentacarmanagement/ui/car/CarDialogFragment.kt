@@ -21,7 +21,7 @@ class CarDialogFragment : DialogFragment() {
     private val repository = CarRepositoryImpl(CarDataSourceImpl())
     private lateinit var viewModel: CarViewModel
     private lateinit var brandAdapter: BrandAdapter
-    //TODO: adicionar el color adapter
+    private lateinit var colorAdapter: ColorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,7 +87,7 @@ class CarDialogFragment : DialogFragment() {
                         position: Int,
                         id: Long
                     ) {
-                    //TODO: aca obtener el color por position desde el adapter
+                        val color = colorAdapter.getColorForPosition(position)
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -101,14 +101,16 @@ class CarDialogFragment : DialogFragment() {
         brandAdapter = BrandAdapter(requireContext(), R.layout.simple_spinner_standar_item).also {
             binding.spBrand.adapter = it
         }
-       //TODO: aca init color adapter
+        colorAdapter = ColorAdapter(requireContext(), R.layout.simple_spinner_standar_item).also {
+            binding.spColor.adapter = it
+        }
     }
 
     private fun handleUiCar(uiState: DataState<CarDTO>) {
         when (uiState) {
             is DataState.Success<CarDTO> -> {
                 brandAdapter.setBrands(uiState.data.brands)
-                //TODO: aca pasar los colors para el adapter
+                colorAdapter.setColors(uiState.data.colors)
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)
                 handlerContainerVisibility(true)
