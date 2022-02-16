@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.databinding.ActivityHomeBinding
-import com.leandroid.system.rentacarmanagement.ui.car.CarViewModel
 
 class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
@@ -83,6 +82,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         }
         return super.onOptionsItemSelected(item)
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_home)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()

@@ -1,5 +1,6 @@
 package com.leandroid.system.rentacarmanagement.ui.car
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -127,10 +128,10 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 
     private fun handlerProgressBarVisibility(show: Boolean) {
         with(binding) {
@@ -148,6 +149,10 @@ class CarDialogFragment : DialogFragment() {
         with(binding) {
             iGenericError.clGenericError.visibility = if (show) View.VISIBLE else View.GONE
         }
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
     }
 
     companion object{
