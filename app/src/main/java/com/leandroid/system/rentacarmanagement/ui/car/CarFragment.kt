@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,6 @@ import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.ui.home.HomeCarViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
-
 
 class CarFragment : Fragment(), CarListener {
     private lateinit var binding: FragmentCarBinding
@@ -47,12 +45,15 @@ class CarFragment : Fragment(), CarListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        //
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCars()
     }
 
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            getCars()
             cars.observe(requireActivity()) { state ->
                 handleUiCars(state)
             }
@@ -132,7 +133,7 @@ class CarFragment : Fragment(), CarListener {
     }
 
     override fun onClick(id: String) {
-      //gotodetail
+      //TODO: go to details
     }
 
     override fun onMenuClickEdit(position: Int) {
