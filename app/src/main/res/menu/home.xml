@@ -17,6 +17,7 @@
     <item
         android:id="@+id/action_create"
         android:title="@string/action_create"
+        app:iconTint="@color/white"
         android:icon="@android:drawable/ic_input_add"
         app:showAsAction="ifRoom|collapseActionView"/>
 

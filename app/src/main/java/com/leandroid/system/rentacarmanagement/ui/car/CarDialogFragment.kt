@@ -127,10 +127,10 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        _binding = null
+//    }
 
     private fun handlerProgressBarVisibility(show: Boolean) {
         with(binding) {

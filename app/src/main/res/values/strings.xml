@@ -7,21 +7,31 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
-    <string name="menu_home">Home</string>
+    <string name="menu_booking">Reservas</string>
     <string name="menu_cars">Autos</string>
     <string name="menu_slideshow">Slideshow</string>
 
     <!--MENU-->
     <string name="action_search">Search</string>
     <string name="action_create">Create</string>
+    <!--CAR-->
     <string name="search_hint">Buscar por marca</string>
-    <string name="error_description">Error</string>
-    <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
     <string name="image_description">Auto</string>
     <string name="menu_popup_edit_title">Editar</string>
     <string name="menu_popup_delete_title">Eliminar</string>
     <string name="delete_car_message_dialog">Desea eliminar el auto?</string>
     <string name="accept_title">Aceptar</string>
     <string name="cancel_title">cancelar</string>
+    <string name="brand_title">Marca</string>
+    <string name="color_title">Color</string>
+
+
+    <string name="error_description">Error</string>
+    <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
+    <string name="insert_comment_car">Ingrese comentario / descripción</string>
+    <string name="insert_patent_car">Ingrese la patente *</string>
+    <string name="insert_model_car">Ingrese el modelo *</string>
+    <string name="create_car_title">Crear</string>
+
 
 </resources>
