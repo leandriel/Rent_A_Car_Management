@@ -43,7 +43,7 @@ class ColorAdapter(context: Context,
         binding.tvColor.text = color.name
     }
 
-    fun setColors(brands: MutableList<Color>) {
+    fun setColors(colors: MutableList<Color>) {
         this.colors.clear()
         this.colors.addAll(colors)
 
