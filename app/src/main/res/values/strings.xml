@@ -24,6 +24,7 @@
     <string name="cancel_title">cancelar</string>
     <string name="brand_title">Marca</string>
     <string name="color_title">Color</string>
+    <string name="required_data_error">Dato obligatorio</string>
 
 
     <string name="error_description">Error</string>

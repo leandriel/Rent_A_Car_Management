@@ -22,11 +22,17 @@ class CarDialogFragment : DialogFragment() {
     private lateinit var viewModel: CarViewModel
     private lateinit var brandAdapter: BrandAdapter
     private lateinit var colorAdapter: ColorAdapter
+    private var car = Car()
+    private var carId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
-        viewModel = ViewModelProvider(requireActivity(), CarViewModelFactory(repository))[CarViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            CarViewModelFactory(repository)
+        )[CarViewModel::class.java]
+        getBundleData()
     }
 
     override fun onCreateView(
@@ -45,25 +51,81 @@ class CarDialogFragment : DialogFragment() {
         )
 
         setUpUI()
+        setUpListener()
         setUpSpinnerAdapter()
         setUpObserverViewModel()
+    }
 
-        binding.btnClosed.setOnClickListener {
-            dismiss()
-        }
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCar(carId)
     }
 
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            getCar("")
             carDTO.observe(requireActivity()) { state ->
-               handleUiCar(state)
+                handleUiCar(state)
             }
         }
     }
 
+    private fun setUpListener() {
+        with(binding) {
+            btnClosed.setOnClickListener {
+                dismiss()
+            }
+            btnActions.setOnClickListener {
+               setModelToCar()
+               setPatentToCar()
+               setCommentToCar()
+                if(!car.isRequiredEmptyData){
+                    viewModel.saveCar(car)
+                }
+            }
+        }
+    }
+
+    private fun setModelToCar() {
+        binding.edModel.let { ed ->
+            ed.text.toString().let {
+                it.ifEmpty {
+                    ed.error = requireContext().getString(R.string.required_data_error)
+                    return@let
+                }
+                ed.error = null
+                car.model = it
+            }
+        }
+    }
+
+    private fun setPatentToCar() {
+        binding.edPatent.let { ed ->
+            ed.text.toString().let {
+                it.ifEmpty {
+                    ed.error = requireContext().getString(R.string.required_data_error)
+                    return@let
+                }
+                ed.error = null
+                car.patent = it
+            }
+        }
+    }
+
+    private fun setCommentToCar() {
+        binding.edComment.let { ed ->
+            ed.text.toString().let {
+                car.comment = it
+            }
+        }
+    }
+
+    private fun getBundleData(){
+        arguments?.let {
+            carId = it.getString(CAR_ID_KEY, "");
+        }
+    }
     private fun setUpUI() {
-        with(binding){
+        with(binding) {
             spBrand.apply {
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -72,7 +134,9 @@ class CarDialogFragment : DialogFragment() {
                         position: Int,
                         id: Long
                     ) {
-                        val brand = brandAdapter.getBrandForPosition(position)
+                        brandAdapter.getBrandForPosition(position).let {
+                            car.brand = it
+                        }
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -87,7 +151,9 @@ class CarDialogFragment : DialogFragment() {
                         position: Int,
                         id: Long
                     ) {
-                        val color = colorAdapter.getColorForPosition(position)
+                        colorAdapter.getColorForPosition(position).let {
+                            car.color = it
+                        }
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -152,12 +218,12 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    companion object{
+    companion object {
         fun newInstance(id: String): CarDialogFragment {
             Bundle().apply {
                 putString(CAR_ID_KEY, id);
             }.also { b ->
-               return CarDialogFragment().apply {
+                return CarDialogFragment().apply {
                     arguments = b
                 }
             }
