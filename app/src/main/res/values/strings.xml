@@ -30,7 +30,8 @@
     <string name="car_updated_success">Auto actualizado correctamente</string>
     <string name="car_added_error">Problemas al adicionar el auto</string>
     <string name="car_updated_error">Problemas al actualizar el auto</string>
-
+    <string name="create_car_title">Crear</string>
+    <string name="update_car_title">Actualizar</string>
 
 
     <string name="error_description">Error</string>
@@ -38,7 +39,7 @@
     <string name="insert_comment_car">Ingrese comentario / descripción</string>
     <string name="insert_patent_car">Ingrese la patente *</string>
     <string name="insert_model_car">Ingrese el modelo *</string>
-    <string name="create_car_title">Crear</string>
+
 
 
 </resources>

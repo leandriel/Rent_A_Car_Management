@@ -27,6 +27,8 @@ class CarDialogFragment : DialogFragment() {
     private lateinit var colorAdapter: ColorAdapter
     private var car = Car()
     private var carId = ""
+    private val isCreate: Boolean
+        get() = carId.isEmpty()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,37 +69,37 @@ class CarDialogFragment : DialogFragment() {
 
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            carDTO.observe(requireActivity()) { state ->
+            carDTO.observe(this@CarDialogFragment) { state ->
                 handleUiCar(state)
             }
-            saveSuccess.observe(requireActivity()) { success ->
+            saveSuccess.observe(this@CarDialogFragment) { success ->
                 success.getContentIfNotHandled()?.let {
                     if (it) {
                         cleanComponents()
                         showToast(
-                            requireContext(),
+                            requireActivity(),
                             requireActivity().getString(R.string.car_added_success)
                         )
                     } else {
                         showToast(
-                            requireContext(),
+                            requireActivity(),
                             requireActivity().getString(R.string.car_added_error)
                         )
                     }
                 }
             }
 
-            updateSuccess.observe(requireActivity()) { success ->
+            updateSuccess.observe(this@CarDialogFragment) { success ->
                 success.getContentIfNotHandled()?.let {
                     if (it) {
                         cleanComponents()
                         showToast(
-                            requireContext(),
+                            requireActivity(),
                             requireActivity().getString(R.string.car_updated_success)
                         )
                     } else {
                         showToast(
-                            requireContext(),
+                            requireActivity(),
                             requireActivity().getString(R.string.car_updated_error)
                         )
                     }
@@ -111,6 +113,7 @@ class CarDialogFragment : DialogFragment() {
             edModel.setText(EMPTY_STRING)
             edPatent.setText(EMPTY_STRING)
             edComment.setText(EMPTY_STRING)
+            btnActions.text = requireActivity().getString(R.string.create_car_title)
         }
     }
 
@@ -124,10 +127,13 @@ class CarDialogFragment : DialogFragment() {
                 setPatentToCar()
                 setCommentToCar()
                 if (!car.isRequiredEmptyData) {
-                    viewModel.saveCar(car)
+                    if (isCreate)
+                        viewModel.saveCar(car)
+                    else
+                        viewModel.updateCar(car)
                 } else {
                     showToast(
-                        requireContext(),
+                        requireActivity(),
                         requireActivity().getString(R.string.required_datas_error)
                     )
                 }
@@ -139,7 +145,7 @@ class CarDialogFragment : DialogFragment() {
         binding.edModel.let { ed ->
             ed.text.toString().let {
                 it.ifEmpty {
-                    ed.error = requireContext().getString(R.string.required_data_error)
+                    ed.error = requireActivity().getString(R.string.required_data_error)
                     return@let
                 }
                 ed.error = null
@@ -152,7 +158,7 @@ class CarDialogFragment : DialogFragment() {
         binding.edPatent.let { ed ->
             ed.text.toString().let {
                 it.ifEmpty {
-                    ed.error = requireContext().getString(R.string.required_data_error)
+                    ed.error = requireActivity().getString(R.string.required_data_error)
                     return@let
                 }
                 ed.error = null
@@ -215,10 +221,10 @@ class CarDialogFragment : DialogFragment() {
     }
 
     private fun setUpSpinnerAdapter() {
-        brandAdapter = BrandAdapter(requireContext(), R.layout.simple_spinner_standar_item).also {
+        brandAdapter = BrandAdapter(requireActivity(), R.layout.simple_spinner_standar_item).also {
             binding.spBrand.adapter = it
         }
-        colorAdapter = ColorAdapter(requireContext(), R.layout.simple_spinner_standar_item).also {
+        colorAdapter = ColorAdapter(requireActivity(), R.layout.simple_spinner_standar_item).also {
             binding.spColor.adapter = it
         }
     }
@@ -228,6 +234,10 @@ class CarDialogFragment : DialogFragment() {
             is DataState.Success<CarDTO> -> {
                 brandAdapter.setBrands(uiState.data.brands)
                 colorAdapter.setColors(uiState.data.colors)
+                if (!isCreate) {
+                    car = uiState.data.car
+                    setCarUI(uiState.data.car)
+                }
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)
                 handlerContainerVisibility(true)
@@ -243,6 +253,17 @@ class CarDialogFragment : DialogFragment() {
                 handlerContainerVisibility(false)
             }
             is DataState.Idle -> Unit
+        }
+    }
+
+    private fun setCarUI(car: Car) {
+        with(binding) {
+            btnActions.text = requireActivity().getText(R.string.update_car_title)
+            spBrand.setSelection(brandAdapter.getPositionByBrand(car.brand))
+            spColor.setSelection(colorAdapter.getPositionByColor(car.color))
+            edModel.setText(car.model)
+            edPatent.setText(car.patent)
+            edComment.setText(car.comment)
         }
     }
 
@@ -269,7 +290,11 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    companion object{
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+    }
+
+    companion object {
         fun newInstance(id: String): CarDialogFragment {
             Bundle().apply {
                 putString(CAR_ID_KEY, id);

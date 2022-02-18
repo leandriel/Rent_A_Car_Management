@@ -25,7 +25,7 @@ class CarDataSourceImpl: CarDataSource {
 
     override fun updateCar(car: Car): ApiResponse<MutableList<Car>> {
         cars.indexOfFirst {
-            it.id === car.id
+            it.id == car.id
         }.also {
             cars[it] = car
         }

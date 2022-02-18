@@ -45,6 +45,6 @@
 <!--        <item name="android:textSize">@dimen/buttonTextSize</item>-->
         <item name="android:textColor">@color/white</item>
         <item name="android:padding">@dimen/eight_dp</item>
-        <item name="android:background">@color/teal_200</item>
+        <item name="android:background">@color/blue_500</item>
     </style>
 </resources>

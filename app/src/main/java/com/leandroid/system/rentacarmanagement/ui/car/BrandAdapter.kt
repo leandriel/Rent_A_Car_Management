@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import com.leandroid.system.rentacarmanagement.databinding.ItemBrandBinding
 import com.leandroid.system.rentacarmanagement.model.Brand
+import com.leandroid.system.rentacarmanagement.model.Color
 
 class BrandAdapter(
     context: Context,
@@ -38,6 +39,10 @@ class BrandAdapter(
 
     fun getBrandForPosition(position: Int): Brand {
         return brands[position]
+    }
+
+    fun getPositionByBrand(brand: Brand): Int {
+        return brands.indexOf(brand)
     }
 
     private fun bind(binding: ItemBrandBinding, brand: Brand) {

@@ -39,6 +39,10 @@ class ColorAdapter(context: Context,
         return colors[position]
     }
 
+    fun getPositionByColor(color: Color): Int {
+        return colors.indexOf(color)
+    }
+
     private fun bind(binding: ItemColorBinding, color: Color) {
         binding.tvColor.text = color.name
     }
