@@ -25,6 +25,12 @@
     <string name="brand_title">Marca</string>
     <string name="color_title">Color</string>
     <string name="required_data_error">Dato obligatorio</string>
+    <string name="required_datas_error">Datos obligatorios vacios</string>
+    <string name="car_added_success">Auto adicionado correctamente</string>
+    <string name="car_updated_success">Auto actualizado correctamente</string>
+    <string name="car_added_error">Problemas al adicionar el auto</string>
+    <string name="car_updated_error">Problemas al actualizar el auto</string>
+
 
 
     <string name="error_description">Error</string>

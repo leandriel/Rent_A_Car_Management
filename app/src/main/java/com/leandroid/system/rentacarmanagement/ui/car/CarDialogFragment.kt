@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarDialogBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showToast
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 class CarDialogFragment : DialogFragment() {
@@ -40,6 +42,7 @@ class CarDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         _binding = FragmentCarDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -66,6 +69,47 @@ class CarDialogFragment : DialogFragment() {
             carDTO.observe(requireActivity()) { state ->
                 handleUiCar(state)
             }
+            saveSuccess.observe(requireActivity()) { success ->
+                success.getContentIfNotHandled()?.let {
+                    if (it) {
+                        cleanComponents()
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_added_success)
+                        )
+                    } else {
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_added_error)
+                        )
+                    }
+                }
+            }
+
+            updateSuccess.observe(requireActivity()) { success ->
+                success.getContentIfNotHandled()?.let {
+                    if (it) {
+                        cleanComponents()
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_updated_success)
+                        )
+                    } else {
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_updated_error)
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun cleanComponents() {
+        with(binding) {
+            edModel.setText(EMPTY_STRING)
+            edPatent.setText(EMPTY_STRING)
+            edComment.setText(EMPTY_STRING)
         }
     }
 
@@ -75,11 +119,16 @@ class CarDialogFragment : DialogFragment() {
                 dismiss()
             }
             btnActions.setOnClickListener {
-               setModelToCar()
-               setPatentToCar()
-               setCommentToCar()
-                if(!car.isRequiredEmptyData){
+                setModelToCar()
+                setPatentToCar()
+                setCommentToCar()
+                if (!car.isRequiredEmptyData) {
                     viewModel.saveCar(car)
+                } else {
+                    showToast(
+                        requireContext(),
+                        requireActivity().getString(R.string.required_datas_error)
+                    )
                 }
             }
         }
@@ -119,11 +168,12 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    private fun getBundleData(){
+    private fun getBundleData() {
         arguments?.let {
-            carId = it.getString(CAR_ID_KEY, "");
+            carId = it.getString(CAR_ID_KEY, EMPTY_STRING)
         }
     }
+
     private fun setUpUI() {
         with(binding) {
             spBrand.apply {
@@ -231,5 +281,6 @@ class CarDialogFragment : DialogFragment() {
 
         const val CAR_ID_KEY = "car_id_key"
         const val CAR_DIALOG_FRAGMENT_FLAG = "car_dialog_fragment_flag"
+        const val EMPTY_STRING = ""
     }
 }

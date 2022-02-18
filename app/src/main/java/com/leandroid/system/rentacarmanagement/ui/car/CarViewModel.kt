@@ -9,6 +9,7 @@ import com.leandroid.system.rentacarmanagement.data.repository.CarRepository
 import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
+import com.leandroid.system.rentacarmanagement.ui.utils.EventWrapper
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -22,6 +23,11 @@ class CarViewModel(private val repository: CarRepository) : ViewModel() {
     private val _carDTO: MutableLiveData<DataState<CarDTO>> =
         MutableLiveData(DataState.Idle)
     val carDTO: LiveData<DataState<CarDTO>> = _carDTO
+
+    private val _saveSuccess = MutableLiveData<EventWrapper<Boolean>>()
+    val saveSuccess: LiveData<EventWrapper<Boolean>> = _saveSuccess
+    private val _updateSuccess = MutableLiveData<EventWrapper<Boolean>>()
+    val updateSuccess: LiveData<EventWrapper<Boolean>> = _updateSuccess
 
     fun getCars() {
         viewModelScope.launch {
@@ -70,10 +76,12 @@ class CarViewModel(private val repository: CarRepository) : ViewModel() {
                     }
                     is Response.Success -> {
                         _cars.value = DataState.Success(it.data.data ?: mutableListOf())
+                        _saveSuccess.value = EventWrapper(true)
                     }
                     is Response.Error -> {
                         _cars.value = DataState.Loading(loading = false)
                         _cars.value = DataState.Error(it.exception)
+                        _saveSuccess.value = EventWrapper(false)
                     }
                 }
             }.launchIn(this)
@@ -89,10 +97,12 @@ class CarViewModel(private val repository: CarRepository) : ViewModel() {
                     }
                     is Response.Success -> {
                         _cars.value = DataState.Success(it.data.data ?: mutableListOf())
+                        _updateSuccess.value = EventWrapper(true)
                     }
                     is Response.Error -> {
                         _cars.value = DataState.Loading(loading = false)
                         _cars.value = DataState.Error(it.exception)
+                        _updateSuccess.value = EventWrapper(false)
                     }
                 }
             }.launchIn(this)
