@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +15,7 @@ import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarDialogBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showToast
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 class CarDialogFragment : DialogFragment() {
@@ -22,12 +24,18 @@ class CarDialogFragment : DialogFragment() {
     private val repository = CarRepositoryImpl(CarDataSourceImpl())
     private lateinit var viewModel: CarViewModel
     private lateinit var brandAdapter: BrandAdapter
-    //TODO: adicionar el color adapter
+    private lateinit var colorAdapter: ColorAdapter
+    private var car = Car()
+    private var carId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
-        viewModel = ViewModelProvider(requireActivity(), CarViewModelFactory(repository))[CarViewModel::class.java]
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            CarViewModelFactory(repository)
+        )[CarViewModel::class.java]
+        getBundleData()
     }
 
     override fun onCreateView(
@@ -35,6 +43,7 @@ class CarDialogFragment : DialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
         _binding = FragmentCarDialogBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -46,25 +55,128 @@ class CarDialogFragment : DialogFragment() {
         )
 
         setUpUI()
+        setUpListener()
         setUpSpinnerAdapter()
         setUpObserverViewModel()
+    }
 
-        binding.btnClosed.setOnClickListener {
-            dismiss()
-        }
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCar(carId)
     }
 
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            getCar("")
             carDTO.observe(requireActivity()) { state ->
-               handleUiCar(state)
+                handleUiCar(state)
+            }
+            saveSuccess.observe(requireActivity()) { success ->
+                success.getContentIfNotHandled()?.let {
+                    if (it) {
+                        cleanComponents()
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_added_success)
+                        )
+                    } else {
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_added_error)
+                        )
+                    }
+                }
+            }
+
+            updateSuccess.observe(requireActivity()) { success ->
+                success.getContentIfNotHandled()?.let {
+                    if (it) {
+                        cleanComponents()
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_updated_success)
+                        )
+                    } else {
+                        showToast(
+                            requireContext(),
+                            requireActivity().getString(R.string.car_updated_error)
+                        )
+                    }
+                }
             }
         }
     }
 
+    private fun cleanComponents() {
+        with(binding) {
+            edModel.setText(EMPTY_STRING)
+            edPatent.setText(EMPTY_STRING)
+            edComment.setText(EMPTY_STRING)
+        }
+    }
+
+    private fun setUpListener() {
+        with(binding) {
+            btnClosed.setOnClickListener {
+                dismiss()
+            }
+            btnActions.setOnClickListener {
+                setModelToCar()
+                setPatentToCar()
+                setCommentToCar()
+                if (!car.isRequiredEmptyData) {
+                    viewModel.saveCar(car)
+                } else {
+                    showToast(
+                        requireContext(),
+                        requireActivity().getString(R.string.required_datas_error)
+                    )
+                }
+            }
+        }
+    }
+
+    private fun setModelToCar() {
+        binding.edModel.let { ed ->
+            ed.text.toString().let {
+                it.ifEmpty {
+                    ed.error = requireContext().getString(R.string.required_data_error)
+                    return@let
+                }
+                ed.error = null
+                car.model = it
+            }
+        }
+    }
+
+    private fun setPatentToCar() {
+        binding.edPatent.let { ed ->
+            ed.text.toString().let {
+                it.ifEmpty {
+                    ed.error = requireContext().getString(R.string.required_data_error)
+                    return@let
+                }
+                ed.error = null
+                car.patent = it
+            }
+        }
+    }
+
+    private fun setCommentToCar() {
+        binding.edComment.let { ed ->
+            ed.text.toString().let {
+                car.comment = it
+            }
+        }
+    }
+
+    private fun getBundleData() {
+        arguments?.let {
+            carId = it.getString(CAR_ID_KEY, EMPTY_STRING)
+        }
+    }
+
     private fun setUpUI() {
-        with(binding){
+        with(binding) {
             spBrand.apply {
                 onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(
@@ -73,7 +185,9 @@ class CarDialogFragment : DialogFragment() {
                         position: Int,
                         id: Long
                     ) {
-                        val brand = brandAdapter.getBrandForPosition(position)
+                        brandAdapter.getBrandForPosition(position).let {
+                            car.brand = it
+                        }
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -88,7 +202,9 @@ class CarDialogFragment : DialogFragment() {
                         position: Int,
                         id: Long
                     ) {
-                    //TODO: aca obtener el color por position desde el adapter
+                        colorAdapter.getColorForPosition(position).let {
+                            car.color = it
+                        }
                     }
 
                     override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -102,14 +218,16 @@ class CarDialogFragment : DialogFragment() {
         brandAdapter = BrandAdapter(requireContext(), R.layout.simple_spinner_standar_item).also {
             binding.spBrand.adapter = it
         }
-       //TODO: aca init color adapter
+        colorAdapter = ColorAdapter(requireContext(), R.layout.simple_spinner_standar_item).also {
+            binding.spColor.adapter = it
+        }
     }
 
     private fun handleUiCar(uiState: DataState<CarDTO>) {
         when (uiState) {
             is DataState.Success<CarDTO> -> {
                 brandAdapter.setBrands(uiState.data.brands)
-                //TODO: aca pasar los colors para el adapter
+                colorAdapter.setColors(uiState.data.colors)
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)
                 handlerContainerVisibility(true)
@@ -151,16 +269,12 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-    }
-
     companion object{
         fun newInstance(id: String): CarDialogFragment {
             Bundle().apply {
                 putString(CAR_ID_KEY, id);
             }.also { b ->
-               return CarDialogFragment().apply {
+                return CarDialogFragment().apply {
                     arguments = b
                 }
             }
@@ -168,5 +282,6 @@ class CarDialogFragment : DialogFragment() {
 
         const val CAR_ID_KEY = "car_id_key"
         const val CAR_DIALOG_FRAGMENT_FLAG = "car_dialog_fragment_flag"
+        const val EMPTY_STRING = ""
     }
 }

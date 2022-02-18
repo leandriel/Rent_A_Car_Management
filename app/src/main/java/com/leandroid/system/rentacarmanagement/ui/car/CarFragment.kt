@@ -48,9 +48,13 @@ class CarFragment : Fragment(), CarListener {
         initRecyclerView()
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getCars()
+    }
+
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            getCars()
             cars.observe(requireActivity()) { state ->
                 handleUiCars(state)
             }
@@ -130,7 +134,7 @@ class CarFragment : Fragment(), CarListener {
     }
 
     override fun onClick(id: String) {
-      //gotodetail
+      //TODO: go to details
     }
 
     override fun onMenuClickEdit(position: Int) {

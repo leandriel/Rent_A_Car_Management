@@ -49,7 +49,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     private fun setUpNavigation(){
         val navController = findNavController(R.id.nav_host_fragment_content_home)
         navController.addOnDestinationChangedListener { _, destination, _ ->  //3
-            if (destination.id == R.id.nav_home) {
+            if (destination.id == R.id.nav_booking) {
                 binding.appBarHome.fab.visibility = View.GONE
             } else {
                 binding.appBarHome.fab.visibility = View.VISIBLE
@@ -59,7 +59,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         val navView: NavigationView = binding.navView
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_car, R.id.nav_slideshow
+                R.id.nav_booking, R.id.nav_car
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

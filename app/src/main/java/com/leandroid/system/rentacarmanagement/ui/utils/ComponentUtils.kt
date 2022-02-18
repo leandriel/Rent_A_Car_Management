@@ -2,9 +2,14 @@ package com.leandroid.system.rentacarmanagement.ui.utils
 
 import android.content.Context
 import android.content.DialogInterface
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 
 object ComponentUtils {
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
     fun showDialog(
         context: Context,
         message: String,
