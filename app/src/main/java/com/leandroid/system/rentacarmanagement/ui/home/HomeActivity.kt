@@ -16,12 +16,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.databinding.ActivityHomeBinding
+import com.leandroid.system.rentacarmanagement.ui.utils.FragmentEnum
 
 class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
-    private val homeCarViewModel: HomeCarViewModel by viewModels()
+    private val communicationViewModel: CommunicationViewModel by viewModels()
+    private var fragmentEnum: FragmentEnum = FragmentEnum.CAR
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +33,7 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
         setUpToolbar()
         setUpNavigation()
-
+        setUpListener()
 //        binding.appBarHome.fab.setOnClickListener { view ->
 //            navController.navigate(R.id.nav_home)  //2
 //
@@ -42,17 +44,25 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
 
     }
 
-    private fun setUpToolbar(){
+    private fun setUpToolbar() {
         setSupportActionBar(binding.appBarHome.toolbar)
     }
 
-    private fun setUpNavigation(){
+    private fun setUpListener() {
+        binding.appBarHome.fab.setOnClickListener { view ->
+
+        }
+    }
+
+    private fun setUpNavigation() {
         val navController = findNavController(R.id.nav_host_fragment_content_home)
         navController.addOnDestinationChangedListener { _, destination, _ ->  //3
             if (destination.id == R.id.nav_booking) {
-                binding.appBarHome.fab.visibility = View.GONE
-            } else {
+                fragmentEnum = FragmentEnum.BOOKING
                 binding.appBarHome.fab.visibility = View.VISIBLE
+            } else {
+                fragmentEnum = FragmentEnum.CAR
+                binding.appBarHome.fab.visibility = View.GONE
             }
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout
@@ -77,8 +87,13 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
-            R.id.action_create -> homeCarViewModel.create()
+        when (item.itemId) {
+                R.id.action_create -> {
+                    if(fragmentEnum == FragmentEnum.CAR)
+                        communicationViewModel.createCar()
+                    else
+                        communicationViewModel.createBooking()
+                }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -94,9 +109,9 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     override fun onQueryTextChange(text: String?): Boolean {
-         text?.let {
-             homeCarViewModel.setSearchText(text)
-         }
+        text?.let {
+            communicationViewModel.setSearchText(text)
+        }
         return false
     }
 }

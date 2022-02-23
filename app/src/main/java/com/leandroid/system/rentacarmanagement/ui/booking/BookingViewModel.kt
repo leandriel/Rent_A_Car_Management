@@ -22,9 +22,9 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
         MutableLiveData(DataState.Idle)
     val bookingDetails: LiveData<DataState<BookingDetails>> = _bookingDetails
 
-    fun getAllCars() {
+    fun getBookingsByDate(date: String){
         viewModelScope.launch {
-            repository.getAllCars().onEach {
+            repository.getBookingsByDate(date).onEach {
                 when (it) {
                     is Response.NotInitialized, Response.Loading -> {
                         _bookingsDetails.value = DataState.Loading(loading = true)
@@ -40,44 +40,62 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
             }.launchIn(this)
         }
     }
-
-    fun getCarsByDate(date: String) {
-        viewModelScope.launch {
-            repository.getCarsByDate(date).onEach {
-                when (it) {
-                    is Response.NotInitialized, Response.Loading -> {
-                        _bookingsDetails.value = DataState.Loading(loading = true)
-                    }
-                    is Response.Success -> {
-                        _bookingsDetails.value = DataState.Success(it.data.data ?: mutableListOf())
-                    }
-                    is Response.Error -> {
-                        _bookingsDetails.value = DataState.Loading(loading = false)
-                        _bookingsDetails.value = DataState.Error(it.exception)
-                    }
-                }
-            }.launchIn(this)
-        }
-    }
-
-    fun getCarDetails(id: String) {
-        viewModelScope.launch {
-            repository.getCarDetails(id).onEach {
-                when (it) {
-                    is Response.NotInitialized, Response.Loading -> {
-                        _bookingDetails.value = DataState.Loading(loading = true)
-                    }
-                    is Response.Success -> {
-                        _bookingDetails.value = DataState.Success(it.data.data ?: BookingDetails())
-                    }
-                    is Response.Error -> {
-                        _bookingDetails.value = DataState.Loading(loading = false)
-                        _bookingDetails.value = DataState.Error(it.exception)
-                    }
-                }
-            }.launchIn(this)
-        }
-    }
+//    fun getAllCars() {
+//        viewModelScope.launch {
+//            repository.getAllCars().onEach {
+//                when (it) {
+//                    is Response.NotInitialized, Response.Loading -> {
+//                        _bookingsDetails.value = DataState.Loading(loading = true)
+//                    }
+//                    is Response.Success -> {
+//                        _bookingsDetails.value = DataState.Success(it.data.data ?: mutableListOf())
+//                    }
+//                    is Response.Error -> {
+//                        _bookingsDetails.value = DataState.Loading(loading = false)
+//                        _bookingsDetails.value = DataState.Error(it.exception)
+//                    }
+//                }
+//            }.launchIn(this)
+//        }
+//    }
+//
+//    fun getCarsByDate(date: String) {
+//        viewModelScope.launch {
+//            repository.getCarsByDate(date).onEach {
+//                when (it) {
+//                    is Response.NotInitialized, Response.Loading -> {
+//                        _bookingsDetails.value = DataState.Loading(loading = true)
+//                    }
+//                    is Response.Success -> {
+//                        _bookingsDetails.value = DataState.Success(it.data.data ?: mutableListOf())
+//                    }
+//                    is Response.Error -> {
+//                        _bookingsDetails.value = DataState.Loading(loading = false)
+//                        _bookingsDetails.value = DataState.Error(it.exception)
+//                    }
+//                }
+//            }.launchIn(this)
+//        }
+//    }
+//
+//    fun getCarDetails(id: String) {
+//        viewModelScope.launch {
+//            repository.getCarDetails(id).onEach {
+//                when (it) {
+//                    is Response.NotInitialized, Response.Loading -> {
+//                        _bookingDetails.value = DataState.Loading(loading = true)
+//                    }
+//                    is Response.Success -> {
+//                        _bookingDetails.value = DataState.Success(it.data.data ?: BookingDetails())
+//                    }
+//                    is Response.Error -> {
+//                        _bookingDetails.value = DataState.Loading(loading = false)
+//                        _bookingDetails.value = DataState.Error(it.exception)
+//                    }
+//                }
+//            }.launchIn(this)
+//        }
+//    }
 
     fun saveBooking(booking: Booking) {
         viewModelScope.launch {

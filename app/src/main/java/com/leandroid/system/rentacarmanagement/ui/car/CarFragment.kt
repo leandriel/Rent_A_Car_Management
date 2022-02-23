@@ -14,24 +14,24 @@ import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.ui.booking.BookingViewModel
+import com.leandroid.system.rentacarmanagement.ui.booking.BookingViewModelFactory
 import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment.Companion.CAR_DIALOG_FRAGMENT_FLAG
-import com.leandroid.system.rentacarmanagement.ui.home.HomeCarViewModel
+import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
+import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
 
-class CarFragment : Fragment(), CarListener {
+class CarFragment : Fragment(), RecyclerListener {
     private lateinit var binding: FragmentCarBinding
     private lateinit var carAdapter: CarAdapter
     private val repository = CarRepositoryImpl(CarDataSourceImpl())
     private lateinit var viewModel: CarViewModel
-    private val homeCarViewModel: HomeCarViewModel by activityViewModels()
+    private val communicationViewModel: CommunicationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            CarViewModelFactory(repository)
-        ).get(CarViewModel::class.java)
+        setUpViewModel()
         setUpObserverViewModel()
     }
 
@@ -53,18 +53,25 @@ class CarFragment : Fragment(), CarListener {
         viewModel.getCars()
     }
 
+    private fun setUpViewModel(){
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            CarViewModelFactory(repository)
+        )[CarViewModel::class.java]
+    }
+
     private fun setUpObserverViewModel() {
         with(viewModel) {
             cars.observe(requireActivity()) { state ->
                 handleUiCars(state)
             }
         }
-        with(homeCarViewModel){
+        with(communicationViewModel){
             searchText.observe(requireActivity()) { text ->
                 carAdapter.filterByBrand(text)
             }
 
-            isCreate.observe(requireActivity()) { isCreate ->
+            isCreateCar.observe(requireActivity()) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
                     if(it){
                         openCarFragmentDialog()

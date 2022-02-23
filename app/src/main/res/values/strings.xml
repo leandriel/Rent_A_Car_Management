@@ -17,6 +17,7 @@
     <!--CAR-->
     <string name="search_hint">Buscar por marca</string>
     <string name="image_description">Auto</string>
+    <string name="image_arrow">Flecha</string>
     <string name="menu_popup_edit_title">Editar</string>
     <string name="menu_popup_delete_title">Eliminar</string>
     <string name="delete_car_message_dialog">Desea eliminar el auto?</string>
@@ -32,14 +33,15 @@
     <string name="car_updated_error">Problemas al actualizar el auto</string>
     <string name="create_car_title">Crear</string>
     <string name="update_car_title">Actualizar</string>
-
+    <!--BOOKING-->
+    <string name="delete_booking_message_dialog">Desea eliminar la reserva?</string>
 
     <string name="error_description">Error</string>
     <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
     <string name="insert_comment_car">Ingrese comentario / descripción</string>
     <string name="insert_patent_car">Ingrese la patente *</string>
     <string name="insert_model_car">Ingrese el modelo *</string>
-
+    <string name="show_all_title">mostrar todos</string>
 
 
 </resources>

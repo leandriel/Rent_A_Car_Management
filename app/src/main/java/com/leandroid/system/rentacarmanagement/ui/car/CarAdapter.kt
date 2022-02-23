@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
 
-class CarAdapter(private val listener: CarListener) : RecyclerView.Adapter<CarViewHolder>() {
+class CarAdapter(private val listener: RecyclerListener) : RecyclerView.Adapter<CarViewHolder>() {
 
     private var originCars: MutableList<Car> = mutableListOf()
     private var cars: MutableList<Car> = mutableListOf()
