@@ -4,6 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.databinding.ItemParentBookingBinding
@@ -58,8 +60,14 @@ class BookingDetailsAdapter(bookings: MutableList<BookingDetails>, private val l
         fun bind(booking: T, listener: RecyclerListener) {
             binding.run {
                 (booking as Booking).let {
-                    tvDateStart.text = it.startDate
-                    tvDateEnd.text = it.endDate
+                    tvDateStart.text = it.startDateString
+                    tvDateEnd.text = it.endDateString
+                    tvDrivingLicence.text = it.drivingLicenseString
+                    tvFly.text = it.flyString
+                    tvHotel.text = it.hotelString
+                    tvReturnCar.text = it.returnCar.placeDatetimeString
+                    tvPrice.text = it.priceString
+                    tvCommission.text = it.commissionString
                 }
             }
         }
@@ -78,15 +86,20 @@ class BookingDetailsAdapter(bookings: MutableList<BookingDetails>, private val l
         expandableType: BookingDetails,
         position: Int
     ) {
-//        with(parentViewHolder.containerView) {
-//            findViewById<ImageView>(R.id.i_btn_arrow).setImageDrawable(
-//                ResourcesCompat.getDrawable(
-//                    resources,
-//                    if (expandableType.isExpanded) R.drawable.ic_up_arrow else R.drawable.ic_down_float,
-//                    null
-//                )
-//            )
-//        }
+        with(parentViewHolder.containerView) {
+            findViewById<TextView>(R.id.tv_details).text = expandableType.car.carDetails
+            findViewById<TextView>(R.id.tv_comment).text = expandableType.car.comment
+            findViewById<TextView>(R.id.tv_state).text = expandableType.carState
+            findViewById<TextView>(R.id.tv_state).setTextColor(ContextCompat.getColor(context, expandableType.carStateColor))
+            findViewById<TextView>(R.id.tv_next_booking).text = expandableType.nextBookingString
+            findViewById<ImageView>(R.id.i_btn_arrow).setImageDrawable(
+                ResourcesCompat.getDrawable(
+                    resources,
+                    if (expandableType.isExpanded) R.drawable.ic_up_arrow else R.drawable.ic_down_float,
+                    null
+                )
+            )
+        }
     }
 
     override fun onCreateChildViewHolder(
@@ -122,5 +135,5 @@ class BookingDetailsAdapter(bookings: MutableList<BookingDetails>, private val l
         expandedType: Any,
         expandableType: BookingDetails
     ) {
-        }
+    }
 }

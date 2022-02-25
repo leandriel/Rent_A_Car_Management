@@ -62,22 +62,21 @@ class CarFragment : Fragment(), RecyclerListener {
 
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            cars.observe(requireActivity()) { state ->
+            cars.observe(this@CarFragment) { state ->
                 handleUiCars(state)
             }
         }
         with(communicationViewModel){
-            searchText.observe(requireActivity()) { text ->
+            searchText.observe(this@CarFragment) { text ->
                 carAdapter.filterByBrand(text)
             }
 
-            isCreateCar.observe(requireActivity()) { isCreate ->
+            isCreateCar.observe(this@CarFragment) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
                     if(it){
                         openCarFragmentDialog()
                     }
                 }
-
             }
         }
     }

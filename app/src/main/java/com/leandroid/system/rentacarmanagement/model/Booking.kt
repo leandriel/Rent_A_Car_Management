@@ -23,4 +23,25 @@ data class Booking(
         "",
         ""
     )
+
+    val startDateString: String
+    get() = "Desde: $startDate"
+
+    val endDateString: String
+        get() = "Hasta: $endDate"
+
+    val drivingLicenseString: String
+        get() = "Licencia: $drivingLicense"
+
+    val flyString: String
+        get() = "Vuelo: $fly"
+
+    val hotelString: String
+        get() = "Hotel: $hotel"
+
+    val priceString: String
+        get() = "Precio: $price"
+
+    val commissionString: String
+        get() = "Comisión: $commission"
 }

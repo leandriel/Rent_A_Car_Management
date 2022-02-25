@@ -1,12 +1,13 @@
 package com.leandroid.system.rentacarmanagement.model
 
+import com.leandroid.system.rentacarmanagement.ui.utils.CarStateAvailable
 import com.leandroid.system.rentacarmanagement.ui.utils.ExpandableRecyclerViewAdapter
 
 data class BookingDetails(
     val id: String,
     val car: Car,
     val bookings: MutableList<Booking>
-): ExpandableRecyclerViewAdapter.ExpandableGroup<Any>(){
+) : ExpandableRecyclerViewAdapter.ExpandableGroup<Any>() {
     constructor() : this(
         "",
         Car(),
@@ -14,11 +15,21 @@ data class BookingDetails(
     )
 
     val nextBookingString: String
-      get() = "Proxima reserva: 20/02/2022"
+        get() = "Proxima reserva: 20/02/2022"
 
     override fun getExpandingItems(): MutableList<Any> {
         return bookings as MutableList<Any>
     }
+
+    val carState: String
+        get() {
+            return CarStateAvailable.getState()
+        }
+
+    val carStateColor: Int
+        get() {
+            return CarStateAvailable.getColor()
+        }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

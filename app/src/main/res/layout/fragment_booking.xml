@@ -17,11 +17,11 @@
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/ll_booking_actions"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/zero_default"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingStart="@dimen/four_dp"
-            android:paddingEnd="@dimen/four_dp"
+            android:paddingHorizontal="@dimen/two_dp"
+            android:background="?attr/colorPrimary"
             app:layout_constraintBottom_toTopOf="@id/rv_booking"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -91,7 +91,7 @@ class BookingFragment : Fragment(), RecyclerListener {
         with(binding.rvBooking) {
             layoutManager = linearLayoutManager
             adapter = bookingDetailsAdapter
-            addItemDecoration(getDividerItemDecoration(linearLayoutManager))
+            //addItemDecoration(getDividerItemDecoration(linearLayoutManager))
         }
     }
 

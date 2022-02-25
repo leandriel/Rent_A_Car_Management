@@ -27,6 +27,23 @@ class BookingDataSourceImpl : BookingDataSource {
                     ),
                     "1222",
                     "122"
+                ),
+                Booking(
+                    "2",
+                    Car("1","asd321","ka",
+                        Brand("brandID","brandName"),true, Color("1", "rojo"),"asdasd"),
+                    "ksksk",
+                    "Hotel 2",
+                    "2kkkk",
+                    "20/02/2022",
+                    "27/02/2022",
+                    ReturnCar(
+                        "2",
+                        "Place 2",
+                        "27/02/2022 13:00"
+                    ),
+                    "1400",
+                    "120"
                 )
             )
         )

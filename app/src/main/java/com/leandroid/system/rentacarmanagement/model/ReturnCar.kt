@@ -6,4 +6,7 @@ data class ReturnCar(
     val dateTime: String
 ) {
     constructor() : this("", "", "")
+
+    val placeDatetimeString: String
+    get() = "Devolución: $place $dateTime"
 }

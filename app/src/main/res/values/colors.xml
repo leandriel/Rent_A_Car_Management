@@ -11,9 +11,10 @@
     <color name="teal_900">#004D40</color>
 
     <color name="black">#FF000000</color>
+    <color name="black_light">#535252</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="light_gray">#F4F4F4</color>
+    <color name="light_gray">#DDD7D7</color>
     <color name="gray">#BFBDBD</color>
 
     <color name="light_blue_600">#FF039BE5</color>
