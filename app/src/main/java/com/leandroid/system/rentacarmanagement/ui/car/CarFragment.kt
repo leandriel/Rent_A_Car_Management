@@ -14,11 +14,9 @@ import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
-import com.leandroid.system.rentacarmanagement.ui.booking.BookingViewModel
-import com.leandroid.system.rentacarmanagement.ui.booking.BookingViewModelFactory
 import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment.Companion.CAR_DIALOG_FRAGMENT_FLAG
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
-import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showDialog
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
 
@@ -143,17 +141,15 @@ class CarFragment : Fragment(), RecyclerListener {
       //TODO: go to details
     }
 
-    override fun onMenuClickEdit(position: Int) {
-        val car = carAdapter.getItemByPosition(position)
-        openCarFragmentDialog(car.id)
+    override fun onMenuClickEdit(id: String) {
+        openCarFragmentDialog(id)
     }
 
-    override fun onMenuClickDelete(position: Int) {
-        val car = carAdapter.getItemByPosition(position)
-        ComponentUtils.showDialog(requireContext(), getString(R.string.delete_car_message_dialog), getString(
+    override fun onMenuClickDelete(id: String) {
+        showDialog(requireContext(), getString(R.string.delete_car_message_dialog), getString(
                     R.string.accept_title), getString(R.string.cancel_title)
         ) {
-            deleteCar(car.id)
+            deleteCar(id)
         }
     }
 

@@ -46,6 +46,46 @@ class BookingDataSourceImpl : BookingDataSource {
                     "120"
                 )
             )
+        ),BookingDetails(
+            "2",
+            Car("2","sksksks","kall",
+                Brand("brandID2","brandName2"),true, Color("2", "blaco"),"asdasd"),
+            mutableListOf<Booking>(
+                Booking(
+                    "3",
+                    Car("2","sksksks","kall",
+                        Brand("brandID2","brandName2"),true, Color("2", "blaco"),"asdasd"),
+                    "mdkdkd",
+                    "Hotel 3",
+                    "0003",
+                    "12/02/2022",
+                    "20/02/2022",
+                    ReturnCar(
+                        "3",
+                        "Place 3",
+                        "20/02/2022 12:00"
+                    ),
+                    "2000",
+                    "112"
+                ),
+                Booking(
+                    "4",
+                    Car("2","sksksks","kall",
+                        Brand("brandID2","brandName2"),true, Color("2", "blaco"),"asdasd"),
+                    "msmsms",
+                    "Hotel 4",
+                    "p0022",
+                    "20/02/2022",
+                    "27/02/2022",
+                    ReturnCar(
+                        "4",
+                        "Place 4",
+                        "27/02/2022 13:00"
+                    ),
+                    "1405",
+                    "150"
+                )
+            )
         )
     )
     private val cars = mutableListOf<Car>(

@@ -327,11 +327,8 @@ abstract class ExpandableRecyclerViewAdapter<
     }
 
     fun getGroupByPosition(position: Int): ExpandableType {
-
         return mExpandableList[position]
-
     }
-
 
     /**
      * Asynchronously applies the expansion state to all the list in a background thread swiftly
@@ -340,7 +337,6 @@ abstract class ExpandableRecyclerViewAdapter<
      * This method can be made public to work on subset of @see ExpandableGroup Class by declaring it outside this class
      */
     private fun List<ExpandableType>.applyExpansionState(expansionState: Boolean) {
-
         GlobalScope.launch(Dispatchers.IO) {
             forEach {
                 it.isExpanded = expansionState
@@ -420,6 +416,8 @@ abstract class ExpandableRecyclerViewAdapter<
 //        }
 
         private fun getExpandedList() = mExpandedList
+
+        fun getItemByPosition(position: Int) = mExpandedList[position]
 
         override fun onBindViewHolder(holder: CVH, position: Int) {
             val expanded = mExpandedList[position]

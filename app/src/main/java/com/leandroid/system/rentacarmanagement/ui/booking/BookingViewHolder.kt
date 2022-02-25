@@ -39,11 +39,11 @@ class BookingViewHolder(view: View, private val listener: RecyclerListener) : Re
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
             R.id.action_popup_edit -> {
-                listener.onMenuClickEdit(absoluteAdapterPosition)
+                //listener.onMenuClickEdit(absoluteAdapterPosition)
                 true
             }
             R.id.action_popup_delete -> {
-                listener.onMenuClickDelete(absoluteAdapterPosition)
+                //listener.onMenuClickDelete(absoluteAdapterPosition)
                 true
             }
             else -> false
