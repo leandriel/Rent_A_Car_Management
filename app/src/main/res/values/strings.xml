@@ -26,23 +26,41 @@
     <string name="cancel_title">cancelar</string>
     <string name="brand_title">Marca</string>
     <string name="color_title">Color</string>
-    <string name="required_data_error">Dato obligatorio</string>
-    <string name="required_datas_error">Datos obligatorios vacios</string>
     <string name="car_added_success">Auto adicionado correctamente</string>
     <string name="car_updated_success">Auto actualizado correctamente</string>
     <string name="car_added_error">Problemas al adicionar el auto</string>
     <string name="car_updated_error">Problemas al actualizar el auto</string>
-    <string name="create_car_title">Crear</string>
-    <string name="update_car_title">Actualizar</string>
-    <!--BOOKING-->
-    <string name="delete_booking_message_dialog">Desea eliminar la reserva?</string>
-
-    <string name="error_description">Error</string>
-    <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
     <string name="insert_comment_car">Ingrese comentario / descripción</string>
     <string name="insert_patent_car">Ingrese la patente *</string>
     <string name="insert_model_car">Ingrese el modelo *</string>
+    <!--COMMON-->
+    <string name="required_data_error">Dato obligatorio</string>
+    <string name="required_datas_error">Datos obligatorios vacios</string>
+    <string name="create_title">Crear</string>
+    <string name="update_title">Actualizar</string>
+    <string name="error_description">Error</string>
+    <string name="generic_error_text">Tuvimos un problemas, intenta nuevamente.</string>
+    <!--BOOKING-->
+    <string name="delete_booking_message_dialog">Desea eliminar la reserva?</string>
+    <string name="booking_added_success">Reserva adicionada correctamente</string>
+    <string name="booking_updated_success">Reserva actualizada correctamente</string>
+    <string name="booking_added_error">Problemas al adicionar la reserva</string>
+    <string name="booking_updated_error">Problemas al actualizar la reserva</string>
     <string name="show_all_title">mostrar todos</string>
-
-
+    <string name="car_title">Auto</string>
+    <string name="insert_driving_licence">Ingrese la licencia *</string>
+    <string name="insert_fly_number">Ingrese el vuelo *</string>
+    <string name="insert_hotel">Ingrese el hotel *</string>
+    <string name="insert_return_place">Ingrese lugar de devolución *</string>
+    <string name="insert_price">Ingrese precio</string>
+    <string name="insert_commission">Ingrese comisión</string>
+    <string name="date_ranger">Periodo</string>
+    <string name="return_date">Devolución</string>
+    <string name="licence_title">Licencia</string>
+    <string name="fly_title">Vuelo</string>
+    <string name="hotel_title">Hotel</string>
+    <string name="price_title">Precio</string>
+    <string name="commission_title">Comisión</string>
+    <string name="return_place_title">Lugar de devolución</string>
+    <string name="comment_title">Comentario</string>
 </resources>

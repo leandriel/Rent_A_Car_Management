@@ -28,7 +28,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/gl_bottom"
-            android:text="@string/create_car_title"
+            android:text="@string/create_title"
             tools:text="Save" />
 
         <androidx.appcompat.widget.AppCompatEditText

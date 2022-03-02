@@ -1,5 +1,6 @@
 package com.leandroid.system.rentacarmanagement.data.datasource
 
+import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
 import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
 import com.leandroid.system.rentacarmanagement.model.*
 import java.util.*
@@ -26,7 +27,8 @@ class BookingDataSourceImpl : BookingDataSource {
                         "20/02/2022 12:00"
                     ),
                     "1222",
-                    "122"
+                    "122",
+                    ""
                 ),
                 Booking(
                     "2",
@@ -43,7 +45,8 @@ class BookingDataSourceImpl : BookingDataSource {
                         "27/02/2022 13:00"
                     ),
                     "1400",
-                    "120"
+                    "120",
+                    ""
                 )
             )
         ),BookingDetails(
@@ -66,7 +69,8 @@ class BookingDataSourceImpl : BookingDataSource {
                         "20/02/2022 12:00"
                     ),
                     "2000",
-                    "112"
+                    "112",
+                    ""
                 ),
                 Booking(
                     "4",
@@ -83,7 +87,8 @@ class BookingDataSourceImpl : BookingDataSource {
                         "27/02/2022 13:00"
                     ),
                     "1405",
-                    "150"
+                    "150",
+                    ""
                 )
             )
         )
@@ -98,6 +103,16 @@ class BookingDataSourceImpl : BookingDataSource {
 
     override fun getBookingsByDate(date: String): ApiResponse<MutableList<BookingDetails>> {
         return ApiResponse(200, true, "Reservas", bookingsDetails)
+    }
+
+    override fun getBooking(id: String): ApiResponse<BookingDTO> {
+        val booking = bookingsDetails.map {
+              it.bookings.firstOrNull {
+                it.id == id
+            }
+        }
+
+        return ApiResponse(200, true, "Reserva", BookingDTO(booking[0] ?: Booking(), cars))
     }
 
 //    override fun getAllCars(): ApiResponse<MutableList<BookingDetails>> {

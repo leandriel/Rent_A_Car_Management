@@ -1,6 +1,7 @@
 package com.leandroid.system.rentacarmanagement.data.repository
 
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSource
+import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
 import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
 import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.Booking
@@ -9,6 +10,15 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class BookingRepositoryImpl(private val dataSource: BookingDataSource) : BookingRepository {
+
+    override fun getBooking(id: String): Flow<Response<ApiResponse<BookingDTO>>> = flow {
+        try {
+            val apiResponse = dataSource.getBooking(id)
+            emit(Response.Success(apiResponse))
+        } catch (e: Exception) {
+            emit(Response.Error(e))
+        }
+    }
 
     override fun getBookingsByDate(date: String): Flow<Response<ApiResponse<MutableList<BookingDetails>>>> = flow {
         try {

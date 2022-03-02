@@ -4,11 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepository
 import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.Booking
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
+import com.leandroid.system.rentacarmanagement.ui.utils.EventWrapper
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -21,6 +23,15 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
     private val _bookingDetails: MutableLiveData<DataState<BookingDetails>> =
         MutableLiveData(DataState.Idle)
     val bookingDetails: LiveData<DataState<BookingDetails>> = _bookingDetails
+
+    private val _bookingDTO: MutableLiveData<DataState<BookingDTO>> =
+        MutableLiveData(DataState.Idle)
+    val bookingDTO: LiveData<DataState<BookingDTO>> = _bookingDTO
+
+    private val _saveSuccess = MutableLiveData<EventWrapper<Boolean>>()
+    val saveSuccess: LiveData<EventWrapper<Boolean>> = _saveSuccess
+    private val _updateSuccess = MutableLiveData<EventWrapper<Boolean>>()
+    val updateSuccess: LiveData<EventWrapper<Boolean>> = _updateSuccess
 
     fun getBookingsByDate(date: String){
         viewModelScope.launch {
@@ -78,24 +89,24 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
 //        }
 //    }
 //
-//    fun getCarDetails(id: String) {
-//        viewModelScope.launch {
-//            repository.getCarDetails(id).onEach {
-//                when (it) {
-//                    is Response.NotInitialized, Response.Loading -> {
-//                        _bookingDetails.value = DataState.Loading(loading = true)
-//                    }
-//                    is Response.Success -> {
-//                        _bookingDetails.value = DataState.Success(it.data.data ?: BookingDetails())
-//                    }
-//                    is Response.Error -> {
-//                        _bookingDetails.value = DataState.Loading(loading = false)
-//                        _bookingDetails.value = DataState.Error(it.exception)
-//                    }
-//                }
-//            }.launchIn(this)
-//        }
-//    }
+    fun getBooking(id: String) {
+        viewModelScope.launch {
+            repository.getBooking(id).onEach {
+                when (it) {
+                    is Response.NotInitialized, Response.Loading -> {
+                        _bookingDTO.value = DataState.Loading(loading = true)
+                    }
+                    is Response.Success -> {
+                        _bookingDTO.value = DataState.Success(it.data.data ?: BookingDTO())
+                    }
+                    is Response.Error -> {
+                        _bookingDTO.value = DataState.Loading(loading = false)
+                        _bookingDTO.value = DataState.Error(it.exception)
+                    }
+                }
+            }.launchIn(this)
+        }
+    }
 
     fun saveBooking(booking: Booking) {
         viewModelScope.launch {

@@ -31,6 +31,8 @@ class BookingDetailsAdapter(
         false
     ), PopupMenu.OnMenuItemClickListener  {
 
+    private var position: Int = -1
+    private var idBooking: String = ""
     //private var originBookings: MutableList<BookingDetails> = mutableListOf()
     //private var bookings: MutableList<BookingDetails> = mutableListOf()
 
@@ -171,6 +173,9 @@ class BookingDetailsAdapter(
         expandedType: Any,
         expandableType: BookingDetails
     ) {
+
+        position = expandedViewHolder.absoluteAdapterPosition
+        idBooking = (expandedType as Booking).id
         showPopupMenu(expandedViewHolder.containerView)
     }
 
@@ -184,12 +189,16 @@ class BookingDetailsAdapter(
 
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when (item?.itemId) {
+            R.id.action_popup_show -> {
+                listener.onClick(idBooking)
+                true
+            }
             R.id.action_popup_edit -> {
-                //listener.onMenuClickEdit(absoluteAdapterPosition)
+                listener.onMenuClickEdit(idBooking)
                 true
             }
             R.id.action_popup_delete -> {
-                //listener.onMenuClickDelete(absoluteAdapterPosition)
+                listener.onMenuClickDelete(idBooking)
                 true
             }
             else -> false

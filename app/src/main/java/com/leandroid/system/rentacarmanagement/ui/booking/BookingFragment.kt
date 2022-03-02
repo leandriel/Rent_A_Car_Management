@@ -9,11 +9,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentBookingBinding
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
+import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showDialog
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
@@ -32,7 +34,20 @@ class BookingFragment : Fragment(), RecyclerListener {
         //bookingDetailsAdapter = BookingDetailsAdapter(mutableListOf(), this)
         setUpViewModel()
         setUpObserverViewModel()
+
+//        val dateRangePicker =
+//            MaterialDatePicker.Builder.dateRangePicker()
+//                .setTitleText("Select dates")
+//                .setSelection(
+//                    androidx.core.util.Pair(
+//                        MaterialDatePicker.thisMonthInUtcMilliseconds(),
+//                        MaterialDatePicker.todayInUtcMilliseconds()
+//                    )
+//                )
+//                .build()
+//        dateRangePicker.show(childFragmentManager, "tag")
     }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -47,7 +62,7 @@ class BookingFragment : Fragment(), RecyclerListener {
         initRecyclerView()
     }
 
-    private fun setUpViewModel(){
+    private fun setUpViewModel() {
         viewModel = ViewModelProvider(
             requireActivity(),
             BookingViewModelFactory(repository)
@@ -65,14 +80,14 @@ class BookingFragment : Fragment(), RecyclerListener {
                 handleUiBookings(state)
             }
         }
-        with(communicationViewModel){
+        with(communicationViewModel) {
             searchText.observe(requireActivity()) { text ->
-               // bookingDetailsAdapter.filterByBrand(text)
+                // bookingDetailsAdapter.filterByBrand(text)
             }
 
             isCreateBooking.observe(requireActivity()) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
-                    if(it){
+                    if (it) {
                         //openCarFragmentDialog()
                     }
                 }
@@ -140,27 +155,34 @@ class BookingFragment : Fragment(), RecyclerListener {
         }
     }
 
-
     override fun onClick(id: String) {
         //TODO: go to details
     }
 
     override fun onMenuClickEdit(id: String) {
         //val bookingDetails = bookingDetailsAdapter.getItemByPosition(position)
-        //openCarFragmentDialog(car.id)
+        openBookingFragmentDialog(id)
     }
 
     override fun onMenuClickDelete(id: String) {
         //val bookingDetails = bookingDetailsAdapter.getItemByPosition(position)
-        showDialog(requireContext(), getString(R.string.delete_booking_message_dialog), getString(
-            R.string.accept_title), getString(R.string.cancel_title)
+        showDialog(
+            requireContext(), getString(R.string.delete_booking_message_dialog), getString(
+                R.string.accept_title
+            ), getString(R.string.cancel_title)
         ) {
-            //deleteBooking(bookingDetails.id)
+            deleteBooking(id)
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    private fun deleteBooking(id: String) {
+        viewModel.deleteBooking(id)
+    }
+
+    private fun openBookingFragmentDialog(id: String = "") {
+        BookingDialogFragment.newInstance(id).show(
+            parentFragmentManager,
+            BookingDialogFragment.BOOKING_DIALOG_FRAGMENT_FLAG
+        )
+    }
 }

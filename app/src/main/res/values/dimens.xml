@@ -13,4 +13,5 @@
     <dimen name="twenty_dp">2dp</dimen>
     <dimen name="text_size_large_material">18sp</dimen>
     <dimen name="twenty_six_dp">26dp</dimen>
+    <dimen name="six_dp">6dp</dimen>
 </resources>

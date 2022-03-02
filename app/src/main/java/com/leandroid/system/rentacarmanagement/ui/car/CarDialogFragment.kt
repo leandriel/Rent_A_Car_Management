@@ -113,7 +113,7 @@ class CarDialogFragment : DialogFragment() {
             edModel.setText(EMPTY_STRING)
             edPatent.setText(EMPTY_STRING)
             edComment.setText(EMPTY_STRING)
-            btnActions.text = requireActivity().getString(R.string.create_car_title)
+            btnActions.text = requireActivity().getString(R.string.create_title)
         }
     }
 
@@ -236,7 +236,7 @@ class CarDialogFragment : DialogFragment() {
                 colorAdapter.setColors(uiState.data.colors)
                 if (!isCreate) {
                     car = uiState.data.car
-                    setCarUI(uiState.data.car)
+                    setCarUI()
                 }
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)
@@ -256,9 +256,9 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setCarUI(car: Car) {
+    private fun setCarUI() {
         with(binding) {
-            btnActions.text = requireActivity().getText(R.string.update_car_title)
+            btnActions.text = requireActivity().getText(R.string.update_title)
             spBrand.setSelection(brandAdapter.getPositionByBrand(car.brand))
             spColor.setSelection(colorAdapter.getPositionByColor(car.color))
             edModel.setText(car.model)

@@ -43,4 +43,8 @@ data class Car(
         result = 31 * result + comment.hashCode()
         return result
     }
+
+    override fun toString(): String {
+        return carDetails
+    }
 }
