@@ -34,18 +34,6 @@ class BookingFragment : Fragment(), RecyclerListener {
         //bookingDetailsAdapter = BookingDetailsAdapter(mutableListOf(), this)
         setUpViewModel()
         setUpObserverViewModel()
-
-//        val dateRangePicker =
-//            MaterialDatePicker.Builder.dateRangePicker()
-//                .setTitleText("Select dates")
-//                .setSelection(
-//                    androidx.core.util.Pair(
-//                        MaterialDatePicker.thisMonthInUtcMilliseconds(),
-//                        MaterialDatePicker.todayInUtcMilliseconds()
-//                    )
-//                )
-//                .build()
-//        dateRangePicker.show(childFragmentManager, "tag")
     }
 
     override fun onCreateView(

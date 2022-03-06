@@ -19,13 +19,12 @@ class BookingDataSourceImpl : BookingDataSource {
                     "Fll",
                     "Hotel 1",
                     "22212",
-                    "12/02/2022",
-                    "20/02/2022",
-                    ReturnCar(
-                        "1",
-                        "Place 1",
-                        "20/02/2022 12:00"
-                    ),
+                    88888888888,
+                    "lugar 1",
+                    "2hs",
+                    99999999999,
+                    "lugar 2",
+                    "4hs",
                     "1222",
                     "122",
                     ""
@@ -37,13 +36,12 @@ class BookingDataSourceImpl : BookingDataSource {
                     "ksksk",
                     "Hotel 2",
                     "2kkkk",
-                    "20/02/2022",
-                    "27/02/2022",
-                    ReturnCar(
-                        "2",
-                        "Place 2",
-                        "27/02/2022 13:00"
-                    ),
+                    88888888888,
+                    "lugar 3",
+                    "5hs",
+                    99999999999,
+                    "lugar 4",
+                    "4hs",
                     "1400",
                     "120",
                     ""
@@ -61,13 +59,12 @@ class BookingDataSourceImpl : BookingDataSource {
                     "mdkdkd",
                     "Hotel 3",
                     "0003",
-                    "12/02/2022",
-                    "20/02/2022",
-                    ReturnCar(
-                        "3",
-                        "Place 3",
-                        "20/02/2022 12:00"
-                    ),
+                    88888888888,
+                    "lugar 5",
+                    "2hs",
+                    99999999999,
+                    "lugar 6",
+                    "4hs",
                     "2000",
                     "112",
                     ""
@@ -79,13 +76,12 @@ class BookingDataSourceImpl : BookingDataSource {
                     "msmsms",
                     "Hotel 4",
                     "p0022",
-                    "20/02/2022",
-                    "27/02/2022",
-                    ReturnCar(
-                        "4",
-                        "Place 4",
-                        "27/02/2022 13:00"
-                    ),
+                    88888888888,
+                    "lugar 7",
+                    "2hs",
+                    99999999999,
+                    "lugar 8",
+                    "4hs",
                     "1405",
                     "150",
                     ""

@@ -55,12 +55,14 @@
     <string name="insert_price">Ingrese precio</string>
     <string name="insert_commission">Ingrese comisión</string>
     <string name="date_ranger">Periodo</string>
-    <string name="return_date">Devolución</string>
+    <string name="delivery_date">Hora entrega</string>
+    <string name="return_date">Hora devolución</string>
     <string name="licence_title">Licencia</string>
     <string name="fly_title">Vuelo</string>
     <string name="hotel_title">Hotel</string>
     <string name="price_title">Precio</string>
     <string name="commission_title">Comisión</string>
     <string name="return_place_title">Lugar de devolución</string>
+    <string name="delivery_place_title">Lugar de entrega</string>
     <string name="comment_title">Comentario</string>
 </resources>

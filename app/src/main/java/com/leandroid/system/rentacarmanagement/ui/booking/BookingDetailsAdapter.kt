@@ -72,7 +72,7 @@ class BookingDetailsAdapter(
                     tvDrivingLicence.text = it.drivingLicenseString
                     tvFly.text = it.flyString
                     tvHotel.text = it.hotelString
-                    tvReturnCar.text = it.returnCar.placeDatetimeString
+                    tvReturnCar.text = it.returnTime
                     tvPrice.text = it.priceString
                     tvCommission.text = it.commissionString
 //                    root.setOnClickListener {
