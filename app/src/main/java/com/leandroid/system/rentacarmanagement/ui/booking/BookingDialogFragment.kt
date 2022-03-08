@@ -45,9 +45,6 @@ class BookingDialogFragment : DialogFragment() {
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
         setUpViewModel()
         getBundleData()
-
-
-
     }
 
     override fun onCreateView(
@@ -65,9 +62,9 @@ class BookingDialogFragment : DialogFragment() {
         requireDialog().window?.setWindowAnimations(
             R.style.DialogAnimation
         )
-
         setUpUI()
-        setUpPickers()
+        if (isCreate)
+            setUpPickers()
         setUpListener()
         setUpSpinnerAdapter()
         setUpObserverViewModel()
@@ -78,15 +75,20 @@ class BookingDialogFragment : DialogFragment() {
         viewModel.getBooking(bookingId)
     }
 
-    private fun setUpPickers(){
-        dateRangePicker = getRangePicker(SELECT_DATES,
-                    MaterialDatePicker.todayInUtcMilliseconds(),
-                    MaterialDatePicker.todayInUtcMilliseconds() + setThreeDays())
+    private fun setUpPickers(
+        startDate: Long = MaterialDatePicker.todayInUtcMilliseconds(),
+        endDate: Long = MaterialDatePicker.todayInUtcMilliseconds() + setThreeDays()
+    ) {
+        dateRangePicker = getRangePicker(
+            SELECT_DATES,
+            startDate,
+            endDate
+        )
 
         dateRangePicker.addOnPositiveButtonClickListener {
             booking.startDate = it.first + setOneDays()
             booking.endDate = it.second + setOneDays()
-            with(binding){
+            with(binding) {
                 tvDate.text = booking.startEndDate
                 tvDelivery.text = booking.startDateTime
                 tvReturn.text = booking.endDateTime
@@ -106,7 +108,7 @@ class BookingDialogFragment : DialogFragment() {
 
         timePicker = getTimePicker(SELECT_HOUR)
         timePicker.addOnPositiveButtonClickListener {
-            if (isDeliveryTime){
+            if (isDeliveryTime) {
                 booking.deliveryTime = getTimeFormat()
                 binding.tvDelivery.text = booking.startDateTime
             } else {
@@ -125,10 +127,17 @@ class BookingDialogFragment : DialogFragment() {
         }
 
     }
+
     private fun setThreeDays() = setOneDays() * 3
+
     private fun setOneDays() = 86400000
-    private fun getHour() = if(timePicker.hour.toString().length == 1) "0${timePicker.hour}" else timePicker.hour.toString()
-    private fun getMinute() = if(timePicker.minute.toString().length == 1) "${timePicker.minute}0" else timePicker.minute.toString()
+
+    private fun getHour() =
+        if (timePicker.hour.toString().length == 1) "0${timePicker.hour}" else timePicker.hour.toString()
+
+    private fun getMinute() =
+        if (timePicker.minute.toString().length == 1) "${timePicker.minute}0" else timePicker.minute.toString()
+
     private fun getTimeFormat() = getHour().plus(":").plus(getMinute())
 
     private fun setUpViewModel() {
@@ -220,18 +229,18 @@ class BookingDialogFragment : DialogFragment() {
             }
 
             llDate.setOnClickListener {
-                if(!dateRangePicker.isAdded)
+                if (!dateRangePicker.isAdded)
                     dateRangePicker.show(childFragmentManager, DATA_RANGE_PICKER)
             }
 
             llDelivery.setOnClickListener {
-                if(!timePicker.isAdded)
+                if (!timePicker.isAdded)
                     timePicker.show(childFragmentManager, TIME_PICKER)
                 isDeliveryTime = true
             }
 
             llReturn.setOnClickListener {
-                if(!timePicker.isAdded)
+                if (!timePicker.isAdded)
                     timePicker.show(childFragmentManager, TIME_PICKER)
                 isDeliveryTime = false
             }
@@ -417,6 +426,12 @@ class BookingDialogFragment : DialogFragment() {
         with(binding) {
             btnActions.text = requireActivity().getText(R.string.update_title)
             spCar.setSelection(carAdapter.getPositionByCar(booking.car))
+
+            if (booking.startDate != null && booking.endDate != null)
+                setUpPickers(booking.startDate!!, booking.endDate!!)
+            else
+                setUpPickers()
+
             edDrivingLicence.setText(booking.drivingLicense)
             edFly.setText(booking.fly)
             edHotel.setText(booking.hotel)
