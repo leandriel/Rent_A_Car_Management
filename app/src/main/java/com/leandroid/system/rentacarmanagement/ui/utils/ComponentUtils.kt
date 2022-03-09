@@ -52,8 +52,10 @@ object ComponentUtils {
             )
             .build()
 
-    fun getTimePicker(title: String, timeFormat: Int = TimeFormat.CLOCK_24H) =
+    fun getTimePicker(title: String, hour: Int, minute: Int, timeFormat: Int = TimeFormat.CLOCK_24H) =
         MaterialTimePicker.Builder()
+            .setHour(hour)
+            .setMinute(minute)
             .setTimeFormat(timeFormat)
             .setTitleText(title)
             .build()

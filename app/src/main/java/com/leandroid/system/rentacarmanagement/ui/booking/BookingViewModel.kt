@@ -117,10 +117,12 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
                     }
                     is Response.Success -> {
                         _bookingsDetails.value = DataState.Success(it.data.data ?: mutableListOf())
+                        _saveSuccess.value = EventWrapper(true)
                     }
                     is Response.Error -> {
                         _bookingsDetails.value = DataState.Loading(loading = false)
                         _bookingsDetails.value = DataState.Error(it.exception)
+                        _saveSuccess.value = EventWrapper(false)
                     }
                 }
             }.launchIn(this)
@@ -136,10 +138,12 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
                     }
                     is Response.Success -> {
                         _bookingsDetails.value = DataState.Success(it.data.data ?: mutableListOf())
+                        _updateSuccess.value = EventWrapper(true)
                     }
                     is Response.Error -> {
                         _bookingsDetails.value = DataState.Loading(loading = false)
                         _bookingsDetails.value = DataState.Error(it.exception)
+                        _updateSuccess.value = EventWrapper(false)
                     }
                 }
             }.launchIn(this)

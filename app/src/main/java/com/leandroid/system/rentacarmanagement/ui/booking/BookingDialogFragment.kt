@@ -24,6 +24,7 @@ import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.getTimePi
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showToast
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 import com.leandroid.system.rentacarmanagement.ui.utils.DateTimeUtils.dateShortFormatString
+import java.lang.Exception
 import java.util.*
 
 class BookingDialogFragment : DialogFragment() {
@@ -37,8 +38,8 @@ class BookingDialogFragment : DialogFragment() {
     private val isCreate: Boolean
         get() = bookingId.isEmpty()
     private lateinit var dateRangePicker: MaterialDatePicker<Pair<Long, Long>>
-    private lateinit var timePicker: MaterialTimePicker
-    private var isDeliveryTime: Boolean = true
+    private lateinit var deliveryTimePicker: MaterialTimePicker
+    private lateinit var returnTimePicker: MaterialTimePicker
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,52 +94,64 @@ class BookingDialogFragment : DialogFragment() {
                 tvDelivery.text = booking.startDateTime
                 tvReturn.text = booking.endDateTime
             }
-            print(it)
-            // Respond to positive button click.
-        }
-        dateRangePicker.addOnNegativeButtonClickListener {
-            print(it)
-        }
-        dateRangePicker.addOnCancelListener {
-            print(it)
-        }
-        dateRangePicker.addOnDismissListener {
-            print(it)
         }
 
-        timePicker = getTimePicker(SELECT_HOUR)
-        timePicker.addOnPositiveButtonClickListener {
-            if (isDeliveryTime) {
-                booking.deliveryTime = getTimeFormat()
-                binding.tvDelivery.text = booking.startDateTime
-            } else {
-                booking.returnTime = getTimeFormat()
-                binding.tvReturn.text = booking.endDateTime
+        val deliveryPairTime = getPairTime(booking.deliveryTime)
+        deliveryTimePicker =
+            getTimePicker(SELECT_HOUR, deliveryPairTime.first, deliveryPairTime.second)
+        deliveryTimePicker.addOnPositiveButtonClickListener {
+            booking.deliveryTime = getTimeFormat(true)
+            binding.tvDelivery.text = booking.startDateTime
+        }
+
+        val returnPairTime = getPairTime(booking.returnTime)
+        returnTimePicker = getTimePicker(SELECT_HOUR, returnPairTime.first, returnPairTime.second)
+        returnTimePicker.addOnPositiveButtonClickListener {
+            booking.returnTime = getTimeFormat(false)
+            binding.tvReturn.text = booking.endDateTime
+        }
+    }
+
+    private fun getPairTime(time: String): Pair<Int, Int> {
+        if (time.isEmpty())
+            return Pair(0, 0)
+        time.split(":").let {
+            return try {
+                Pair(it[0].toInt(), it[1].toInt())
+            } catch (e: Exception) {
+                Pair(0, 0)
             }
         }
-        timePicker.addOnNegativeButtonClickListener {
-            // call back code
-        }
-        timePicker.addOnCancelListener {
-            // call back code
-        }
-        timePicker.addOnDismissListener {
-            // call back code
-        }
-
     }
 
     private fun setThreeDays() = setOneDays() * 3
 
     private fun setOneDays() = 86400000
 
-    private fun getHour() =
-        if (timePicker.hour.toString().length == 1) "0${timePicker.hour}" else timePicker.hour.toString()
+    private fun getHour(isDelivery: Boolean) = if (isDelivery) {
+        getHourFormat(deliveryTimePicker)
+    } else {
+        getHourFormat(returnTimePicker)
+    }
 
-    private fun getMinute() =
-        if (timePicker.minute.toString().length == 1) "${timePicker.minute}0" else timePicker.minute.toString()
+    private fun getHourFormat(timePicker: MaterialTimePicker) =
+        if (timePicker.hour.toString().length == 1)
+            "0${timePicker.hour}" else
+            timePicker.hour.toString()
 
-    private fun getTimeFormat() = getHour().plus(":").plus(getMinute())
+    private fun getMinute(isDelivery: Boolean) = if (isDelivery) {
+        getMinuteFormat(deliveryTimePicker)
+    } else {
+        getMinuteFormat(returnTimePicker)
+    }
+
+    private fun getMinuteFormat(timePicker: MaterialTimePicker) =
+        if (timePicker.minute.toString().length == 1)
+            "0${timePicker.minute}" else
+            timePicker.minute.toString()
+
+    private fun getTimeFormat(isDelivery: Boolean) =
+        getHour(isDelivery).plus(":").plus(getMinute(isDelivery))
 
     private fun setUpViewModel() {
         viewModel = ViewModelProvider(
@@ -210,11 +223,9 @@ class BookingDialogFragment : DialogFragment() {
             btnActions.setOnClickListener {
                 setFlyToBooking()
                 setLicenceToBooking()
-                //setStartDateToBooking()
-                //setEndDateToBooking()
                 setHotelToBooking()
                 setCommentToBooking()
-//                setReturnCarToBooking()
+
                 if (!booking.isRequiredEmptyData) {
                     if (isCreate)
                         viewModel.saveBooking(booking)
@@ -234,15 +245,13 @@ class BookingDialogFragment : DialogFragment() {
             }
 
             llDelivery.setOnClickListener {
-                if (!timePicker.isAdded)
-                    timePicker.show(childFragmentManager, TIME_PICKER)
-                isDeliveryTime = true
+                if (!deliveryTimePicker.isAdded)
+                    deliveryTimePicker.show(childFragmentManager, DELIVERY_TIME_PICKER)
             }
 
             llReturn.setOnClickListener {
-                if (!timePicker.isAdded)
-                    timePicker.show(childFragmentManager, TIME_PICKER)
-                isDeliveryTime = false
+                if (!returnTimePicker.isAdded)
+                    returnTimePicker.show(childFragmentManager, RETURN_TIME_PICKER)
             }
         }
     }
@@ -488,7 +497,8 @@ class BookingDialogFragment : DialogFragment() {
         const val BOOKING_DIALOG_FRAGMENT_FLAG = "booking_dialog_fragment_flag"
         const val EMPTY_STRING = ""
         const val DATA_RANGE_PICKER = "date_range_picker"
-        const val TIME_PICKER = "time_picker"
+        const val DELIVERY_TIME_PICKER = "delivery_time_picker"
+        const val RETURN_TIME_PICKER = "return_time_picker"
         const val SELECT_DATES = "Selecciona las fechas"
         const val SELECT_HOUR = "Selecciona la hora"
     }
