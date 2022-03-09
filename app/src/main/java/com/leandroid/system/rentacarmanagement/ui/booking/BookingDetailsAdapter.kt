@@ -173,7 +173,6 @@ class BookingDetailsAdapter(
         expandedType: Any,
         expandableType: BookingDetails
     ) {
-
         position = expandedViewHolder.absoluteAdapterPosition
         idBooking = (expandedType as Booking).id
         showPopupMenu(expandedViewHolder.containerView)

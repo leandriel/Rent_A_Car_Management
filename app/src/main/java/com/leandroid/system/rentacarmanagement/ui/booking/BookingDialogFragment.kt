@@ -245,12 +245,12 @@ class BookingDialogFragment : DialogFragment() {
             }
 
             llDelivery.setOnClickListener {
-                if (!deliveryTimePicker.isAdded)
+                if (booking.startDate != null && !deliveryTimePicker.isAdded)
                     deliveryTimePicker.show(childFragmentManager, DELIVERY_TIME_PICKER)
             }
 
             llReturn.setOnClickListener {
-                if (!returnTimePicker.isAdded)
+                if (booking.endDate != null && !returnTimePicker.isAdded)
                     returnTimePicker.show(childFragmentManager, RETURN_TIME_PICKER)
             }
         }
@@ -285,7 +285,7 @@ class BookingDialogFragment : DialogFragment() {
         binding.edFly.let { ed ->
             ed.text.toString().let {
                 it.ifEmpty {
-                    ed.error = requireActivity().getString(R.string.required_data_error)
+                    binding.edFly.error = requireActivity().getString(R.string.required_data_error)
                     return@let
                 }
                 ed.error = null

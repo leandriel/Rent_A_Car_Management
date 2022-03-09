@@ -9,17 +9,16 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.datepicker.MaterialDatePicker
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentBookingBinding
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
-import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showDialog
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
+import java.util.*
 
 class BookingFragment : Fragment(), RecyclerListener {
 
@@ -28,6 +27,8 @@ class BookingFragment : Fragment(), RecyclerListener {
     private val repository = BookingRepositoryImpl(BookingDataSourceImpl())
     private lateinit var viewModel: BookingViewModel
     private val communicationViewModel: CommunicationViewModel by activityViewModels()
+    private var bookingsOrigin = mutableListOf<BookingDetails>()
+    private var bookings = mutableListOf<BookingDetails>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +60,7 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getBookingsByDate("")
+        viewModel.getBookingsByDate(Date().time.toString())
     }
 
     private fun setUpObserverViewModel() {
@@ -70,13 +71,17 @@ class BookingFragment : Fragment(), RecyclerListener {
         }
         with(communicationViewModel) {
             searchText.observe(requireActivity()) { text ->
-                // bookingDetailsAdapter.filterByBrand(text)
+                bookings = if (text.isEmpty())
+                    bookingsOrigin
+                else
+                    bookingsOrigin.filter { it.car.brand.name.contains(text) }.toMutableList()
+                 bookingDetailsAdapter.addNewList(bookings as MutableList<Any>)
             }
 
             isCreateBooking.observe(requireActivity()) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
                     if (it) {
-                        //openCarFragmentDialog()
+                        openBookingFragmentDialog()
                     }
                 }
 
@@ -105,7 +110,9 @@ class BookingFragment : Fragment(), RecyclerListener {
     private fun handleUiBookings(uiState: DataState<MutableList<BookingDetails>>) {
         when (uiState) {
             is DataState.Success<MutableList<BookingDetails>> -> {
-                bookingDetailsAdapter.addNewList(uiState.data as MutableList<Any>)
+                bookingsOrigin = uiState.data
+                bookings = uiState.data
+                bookingDetailsAdapter.addNewList(bookingsOrigin as MutableList<Any>)
                 //bookingDetailsAdapter.setBookings(uiState.data)
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)

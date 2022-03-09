@@ -155,8 +155,6 @@ abstract class ExpandableRecyclerViewAdapter<
             handleLastPositionScroll(position)
 
             onExpandableClick(pvh, expandable)
-
-            //Log.d(mTAG, "Clicked @ $position")
         }
         return pvh
     }
