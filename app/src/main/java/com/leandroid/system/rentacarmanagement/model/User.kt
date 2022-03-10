@@ -1,6 +1,6 @@
 package com.leandroid.system.rentacarmanagement.model
 
-data class User (
+data class User(
     val id: String,
     val email: String,
     val type: UserType,
@@ -9,4 +9,6 @@ data class User (
     val createDate: String,
     val updateDate: String,
     val deleteDate: String
-    )
+) {
+    constructor() : this("", "", UserType(), Company(), false, "", "", "")
+}

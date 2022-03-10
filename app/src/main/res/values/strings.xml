@@ -65,4 +65,7 @@
     <string name="return_place_title">Lugar de devolución</string>
     <string name="delivery_place_title">Lugar de entrega</string>
     <string name="comment_title">Comentario</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="enter_login">Entrar</string>
 </resources>
