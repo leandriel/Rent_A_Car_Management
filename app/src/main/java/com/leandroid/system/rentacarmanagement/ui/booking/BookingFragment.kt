@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepositoryImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentBookingBinding
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.getDatePicker
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showDialog
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
+import com.leandroid.system.rentacarmanagement.ui.utils.DateTimeUtils.dateShortFormatString
 import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
 import java.util.*
 
@@ -29,10 +34,11 @@ class BookingFragment : Fragment(), RecyclerListener {
     private val communicationViewModel: CommunicationViewModel by activityViewModels()
     private var bookingsOrigin = mutableListOf<BookingDetails>()
     private var bookings = mutableListOf<BookingDetails>()
+    private lateinit var datePicker: MaterialDatePicker<Long>
+    private var selectedDate = Date().time
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //bookingDetailsAdapter = BookingDetailsAdapter(mutableListOf(), this)
         setUpViewModel()
         setUpObserverViewModel()
     }
@@ -48,7 +54,9 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpListener()
         initRecyclerView()
+        setUpPickers()
     }
 
     private fun setUpViewModel() {
@@ -60,7 +68,8 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getBookingsByDate(Date().time.toString())
+        getBookingsByDate( true)
+        setDateText()
     }
 
     private fun setUpObserverViewModel() {
@@ -89,6 +98,23 @@ class BookingFragment : Fragment(), RecyclerListener {
         }
     }
 
+    private fun setUpListener(){
+        binding.cbBooking.setOnCheckedChangeListener { _, isChecked ->
+            getBookingsByDate(isChecked)
+        }
+        binding.fabDate.setOnClickListener {
+            datePicker.show(childFragmentManager, DATE_PICKER)
+        }
+    }
+
+    private fun getBookingsByDate(onlyAvailable: Boolean = binding.cbBooking.isChecked){
+        viewModel.getBookingsByDate(Date().time.toString(), onlyAvailable)
+    }
+
+    private fun setDateText(){
+        binding.tvDateBooking.text = dateShortFormatString(selectedDate)
+    }
+
     private fun initRecyclerView() {
         bookingDetailsAdapter = BookingDetailsAdapter(mutableListOf(), this)
         val linearLayoutManager = getLinearLayoutManager()
@@ -98,6 +124,23 @@ class BookingFragment : Fragment(), RecyclerListener {
             //addItemDecoration(getDividerItemDecoration(linearLayoutManager))
         }
     }
+
+    private fun setUpPickers(
+        startDate: Long = MaterialDatePicker.todayInUtcMilliseconds()
+    ) {
+        datePicker = getDatePicker(
+            SELECT_DATE,
+            startDate
+        )
+
+        datePicker.addOnPositiveButtonClickListener {
+            selectedDate = it + setOneDays()
+            setDateText()
+            getBookingsByDate()
+        }
+    }
+
+    private fun setOneDays() = 86400000
 
     private fun getLinearLayoutManager() = LinearLayoutManager(requireContext())
 
@@ -113,7 +156,6 @@ class BookingFragment : Fragment(), RecyclerListener {
                 bookingsOrigin = uiState.data
                 bookings = uiState.data
                 bookingDetailsAdapter.addNewList(bookingsOrigin as MutableList<Any>)
-                //bookingDetailsAdapter.setBookings(uiState.data)
                 handlerErrorVisibility(false)
                 handlerProgressBarVisibility(false)
                 handlerRecyclerVisibility(true)
@@ -155,12 +197,10 @@ class BookingFragment : Fragment(), RecyclerListener {
     }
 
     override fun onMenuClickEdit(id: String) {
-        //val bookingDetails = bookingDetailsAdapter.getItemByPosition(position)
         openBookingFragmentDialog(id)
     }
 
     override fun onMenuClickDelete(id: String) {
-        //val bookingDetails = bookingDetailsAdapter.getItemByPosition(position)
         showDialog(
             requireContext(), getString(R.string.delete_booking_message_dialog), getString(
                 R.string.accept_title
@@ -179,5 +219,10 @@ class BookingFragment : Fragment(), RecyclerListener {
             parentFragmentManager,
             BookingDialogFragment.BOOKING_DIALOG_FRAGMENT_FLAG
         )
+    }
+
+    companion object {
+        const val SELECT_DATE = "Selecciona fecha de inicio"
+        const val DATE_PICKER = "date_picker"
     }
 }

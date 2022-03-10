@@ -33,9 +33,9 @@ class BookingViewModel(private val repository: BookingRepository) : ViewModel() 
     private val _updateSuccess = MutableLiveData<EventWrapper<Boolean>>()
     val updateSuccess: LiveData<EventWrapper<Boolean>> = _updateSuccess
 
-    fun getBookingsByDate(date: String){
+    fun getBookingsByDate(date: String, onlyAvailable: Boolean){
         viewModelScope.launch {
-            repository.getBookingsByDate(date).onEach {
+            repository.getBookingsByDate(date, onlyAvailable).onEach {
                 when (it) {
                     is Response.NotInitialized, Response.Loading -> {
                         _bookingsDetails.value = DataState.Loading(loading = true)

@@ -20,43 +20,14 @@ class BookingRepositoryImpl(private val dataSource: BookingDataSource) : Booking
         }
     }
 
-    override fun getBookingsByDate(date: String): Flow<Response<ApiResponse<MutableList<BookingDetails>>>> = flow {
+    override fun getBookingsByDate(date: String, onlyAvailable: Boolean): Flow<Response<ApiResponse<MutableList<BookingDetails>>>> = flow {
         try {
-            val apiResponse = dataSource.getBookingsByDate(date)
+            val apiResponse = dataSource.getBookingsByDate(date, onlyAvailable)
             emit(Response.Success(apiResponse))
         } catch (e: Exception) {
             emit(Response.Error(e))
         }
     }
-
-//    override fun getAllCars(): Flow<Response<ApiResponse<MutableList<BookingDetails>>>> = flow {
-//        try {
-//            val apiResponse = dataSource.getBookingsByDate("")
-//            emit(Response.Success(apiResponse))
-//        } catch (e: Exception) {
-//            emit(Response.Error(e))
-//        }
-//    }
-//
-//    override fun getCarsByDate(date: String): Flow<Response<ApiResponse<MutableList<BookingDetails>>>> =
-//        flow {
-//            try {
-//                val apiResponse = dataSource.getBookingsByDate(date)
-//                emit(Response.Success(apiResponse))
-//            } catch (e: Exception) {
-//                emit(Response.Error(e))
-//            }
-//        }
-//
-//    override fun getCarDetails(id: String): Flow<Response<ApiResponse<BookingDetails>>> = flow {
-//        try {
-//            val apiResponse = dataSource.getCarDetails(id)
-//            emit(Response.Success(apiResponse))
-//        } catch (e: Exception) {
-//            emit(Response.Error(e))
-//        }
-//    }
-
 
     override fun saveBooking(booking: Booking): Flow<Response<ApiResponse<MutableList<BookingDetails>>>> =
         flow {

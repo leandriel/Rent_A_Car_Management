@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.databinding.ActivityHomeBinding
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.getDatePicker
 import com.leandroid.system.rentacarmanagement.ui.utils.FragmentEnum
 
 class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
@@ -34,14 +35,6 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         setUpToolbar()
         setUpNavigation()
         setUpListener()
-//        binding.appBarHome.fab.setOnClickListener { view ->
-//            navController.navigate(R.id.nav_home)  //2
-//
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
-
-
     }
 
     private fun setUpToolbar() {
@@ -49,9 +42,9 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
     }
 
     private fun setUpListener() {
-        binding.appBarHome.fab.setOnClickListener { view ->
-
-        }
+//        binding.appBarHome.fab.setOnClickListener { view ->
+//           getDatePicker()
+//        }
     }
 
     private fun setUpNavigation() {
@@ -59,10 +52,10 @@ class HomeActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         navController.addOnDestinationChangedListener { _, destination, _ ->  //3
             if (destination.id == R.id.nav_booking) {
                 fragmentEnum = FragmentEnum.BOOKING
-                binding.appBarHome.fab.visibility = View.VISIBLE
+            //    binding.appBarHome.fab.visibility = View.VISIBLE
             } else {
                 fragmentEnum = FragmentEnum.CAR
-                binding.appBarHome.fab.visibility = View.GONE
+              //  binding.appBarHome.fab.visibility = View.GONE
             }
         }
         val drawerLayout: DrawerLayout = binding.drawerLayout

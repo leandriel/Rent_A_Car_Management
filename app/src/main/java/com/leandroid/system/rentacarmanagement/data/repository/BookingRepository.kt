@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface BookingRepository {
     fun getBooking(id: String): Flow<Response<ApiResponse<BookingDTO>>>
-    fun getBookingsByDate(date:String): Flow<Response<ApiResponse<MutableList<BookingDetails>>>>
+    fun getBookingsByDate(date:String, onlyAvailable: Boolean): Flow<Response<ApiResponse<MutableList<BookingDetails>>>>
     fun saveBooking(booking: Booking): Flow<Response<ApiResponse<MutableList<BookingDetails>>>>
     fun updateBooking(booking: Booking): Flow<Response<ApiResponse<MutableList<BookingDetails>>>>
     fun deleteBooking(id: String): Flow<Response<ApiResponse<MutableList<BookingDetails>>>>

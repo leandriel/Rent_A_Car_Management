@@ -97,7 +97,7 @@ class BookingDataSourceImpl : BookingDataSource {
     private val colors = mutableListOf<Color>(Color("1", "Azul"), Color("3", "Blanco"), Color("2", "Negro"))
 
 
-    override fun getBookingsByDate(date: String): ApiResponse<MutableList<BookingDetails>> {
+    override fun getBookingsByDate(date: String, onlyAvailable: Boolean): ApiResponse<MutableList<BookingDetails>> {
         return ApiResponse(200, true, "Reservas", bookingsDetails)
     }
 

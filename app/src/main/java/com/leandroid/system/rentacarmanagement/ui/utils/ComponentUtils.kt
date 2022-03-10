@@ -41,6 +41,12 @@ object ComponentUtils {
         alert.create().show()
     }
 
+    fun getDatePicker(title: String, startDate: Long) =
+        MaterialDatePicker.Builder.datePicker()
+            .setTitleText(title)
+            .setSelection(startDate)
+            .build()
+
     fun getRangePicker(title: String, startDate: Long, endDate: Long) =
         MaterialDatePicker.Builder.dateRangePicker()
             .setTitleText(title)

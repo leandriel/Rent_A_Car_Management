@@ -140,7 +140,7 @@
         android:id="@+id/rv_expandable"
         android:layout_width="@dimen/zero_default"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/four_dp"
+        android:layout_marginTop="@dimen/one_dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

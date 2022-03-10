@@ -6,7 +6,7 @@ import com.leandroid.system.rentacarmanagement.model.Booking
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
 
 interface BookingDataSource {
-   fun getBookingsByDate(date:String): ApiResponse<MutableList<BookingDetails>>
+   fun getBookingsByDate(date:String, onlyAvailable: Boolean): ApiResponse<MutableList<BookingDetails>>
    fun getBooking(id: String): ApiResponse<BookingDTO>
    fun saveBooking(booking: Booking): ApiResponse<MutableList<BookingDetails>>
    fun updateBooking(booking: Booking): ApiResponse<MutableList<BookingDetails>>

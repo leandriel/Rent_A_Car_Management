@@ -30,6 +30,8 @@
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_booking"
                 android:layout_weight="1"
+                android:textColor="@color/white"
+                android:buttonTint="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/show_all_title" />
@@ -38,6 +40,9 @@
                 android:id="@+id/tv_date_booking"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_marginHorizontal="@dimen/four_dp"
                 tools:text="22/02/2022" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -51,6 +56,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ll_booking_actions"
             tools:listitem="@layout/item_booking" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="@dimen/fab_margin"
+            android:layout_marginBottom="16dp"
+            app:srcCompat="@drawable/ic_calendar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
