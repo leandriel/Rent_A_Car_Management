@@ -16,7 +16,9 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
+import com.leandroid.system.rentacarmanagement.data.repository.BookingRepository
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepositoryImpl
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentBookingDialogBinding
 import com.leandroid.system.rentacarmanagement.model.Booking
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.getRangePicker
@@ -30,7 +32,7 @@ import java.util.*
 class BookingDialogFragment : DialogFragment() {
     private var _binding: FragmentBookingDialogBinding? = null
     private val binding get() = _binding!!
-    private val repository = BookingRepositoryImpl(BookingDataSourceImpl())
+    private lateinit var repository: BookingRepository
     private lateinit var viewModel: BookingViewModel
     private lateinit var carAdapter: CarAdapter
     private var booking = Booking()
@@ -44,6 +46,7 @@ class BookingDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
+        repository = BookingRepositoryImpl(BookingDataSourceImpl(SharedPreferencesImpl(requireContext())))
         setUpViewModel()
         getBundleData()
     }

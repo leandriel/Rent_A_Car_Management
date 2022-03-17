@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
+import com.leandroid.system.rentacarmanagement.data.repository.CarRepository
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarDialogBinding
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showToast
@@ -21,7 +23,7 @@ import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 class CarDialogFragment : DialogFragment() {
     private var _binding: FragmentCarDialogBinding? = null
     private val binding get() = _binding!!
-    private val repository = CarRepositoryImpl(CarDataSourceImpl())
+    private lateinit var repository: CarRepository
     private lateinit var viewModel: CarViewModel
     private lateinit var brandAdapter: BrandAdapter
     private lateinit var colorAdapter: ColorAdapter
@@ -33,10 +35,8 @@ class CarDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
-        viewModel = ViewModelProvider(
-            requireActivity(),
-            CarViewModelFactory(repository)
-        )[CarViewModel::class.java]
+        repository = CarRepositoryImpl(CarDataSourceImpl(SharedPreferencesImpl(requireContext())))
+        setUpViewModel()
         getBundleData()
     }
 
@@ -65,6 +65,13 @@ class CarDialogFragment : DialogFragment() {
     override fun onResume() {
         super.onResume()
         viewModel.getCar(carId)
+    }
+
+    private fun setUpViewModel(){
+        viewModel = ViewModelProvider(
+            requireActivity(),
+            CarViewModelFactory(repository)
+        )[CarViewModel::class.java]
     }
 
     private fun setUpObserverViewModel() {

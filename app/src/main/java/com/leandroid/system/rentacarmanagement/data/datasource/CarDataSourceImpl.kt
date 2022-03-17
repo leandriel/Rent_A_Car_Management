@@ -2,11 +2,12 @@ package com.leandroid.system.rentacarmanagement.data.datasource
 
 import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
 import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferences
 import com.leandroid.system.rentacarmanagement.model.Brand
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.Color
 
-class CarDataSourceImpl: CarDataSource {
+class CarDataSourceImpl(private val sharedPreferences: SharedPreferences): CarDataSource {
     private val cars = mutableListOf<Car>(Car("1","asd321","ka",Brand("brandID","brandName"),true, Color("1", "rojo"),"asdasd"))
     private val brands = mutableListOf<Brand>(Brand("1", "FORD"), Brand("1", "FIAT"), Brand("1", "HONDA"))
     private val colors = mutableListOf<Color>(Color("1", "Azul"), Color("3", "Blanco"), Color("2", "Negro"))

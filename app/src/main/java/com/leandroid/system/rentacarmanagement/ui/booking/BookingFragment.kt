@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
+import com.leandroid.system.rentacarmanagement.data.repository.BookingRepository
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepositoryImpl
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentBookingBinding
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
@@ -29,7 +31,7 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     private lateinit var binding: FragmentBookingBinding
     private lateinit var bookingDetailsAdapter: BookingDetailsAdapter
-    private val repository = BookingRepositoryImpl(BookingDataSourceImpl())
+    private lateinit var repository: BookingRepository
     private lateinit var viewModel: BookingViewModel
     private val communicationViewModel: CommunicationViewModel by activityViewModels()
     private var bookingsOrigin = mutableListOf<BookingDetails>()
@@ -39,6 +41,7 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        repository = BookingRepositoryImpl(BookingDataSourceImpl(SharedPreferencesImpl(requireContext())))
         setUpViewModel()
         setUpObserverViewModel()
     }

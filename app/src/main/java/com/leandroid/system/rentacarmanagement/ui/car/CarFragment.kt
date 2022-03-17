@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
+import com.leandroid.system.rentacarmanagement.data.repository.CarRepository
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment.Companion.CAR_DIALOG_FRAGMENT_FLAG
@@ -23,12 +25,13 @@ import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
 class CarFragment : Fragment(), RecyclerListener {
     private lateinit var binding: FragmentCarBinding
     private lateinit var carAdapter: CarAdapter
-    private val repository = CarRepositoryImpl(CarDataSourceImpl())
+    private lateinit var repository: CarRepository
     private lateinit var viewModel: CarViewModel
     private val communicationViewModel: CommunicationViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        repository = CarRepositoryImpl(CarDataSourceImpl(SharedPreferencesImpl(requireContext())))
         setUpViewModel()
         setUpObserverViewModel()
     }

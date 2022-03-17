@@ -18,4 +18,24 @@ class LoginRepositoryImpl(private val dataSource: LoginDataSource) : LoginReposi
                 emit(Response.Error(e))
             }
         }
+
+    override fun saveUser(user: User): Flow<Boolean> = flow {
+        try {
+            val saved = dataSource.saveUser(user)
+            emit(saved)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(false)
+        }
+    }
+
+    override fun saveToken(token: String): Flow<Boolean> = flow {
+        try {
+            val saved = dataSource.saveToken(token)
+            emit(saved)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(false)
+        }
+    }
 }

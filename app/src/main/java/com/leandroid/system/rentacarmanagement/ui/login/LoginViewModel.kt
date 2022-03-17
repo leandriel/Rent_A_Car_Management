@@ -9,6 +9,7 @@ import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.User
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
+import com.leandroid.system.rentacarmanagement.ui.utils.EventWrapper
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -19,6 +20,8 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
         MutableLiveData(DataState.Idle)
     val user: LiveData<DataState<User>> = _user
 
+    private val _userSaved = MutableLiveData<EventWrapper<Boolean>>()
+    val userSaved: LiveData<EventWrapper<Boolean>> = _userSaved
 
     fun doLogin(email: String, pass: String){
         viewModelScope.launch {
@@ -35,6 +38,14 @@ class LoginViewModel(private val repository: LoginRepository) : ViewModel() {
                         _user.value = DataState.Error(it.exception)
                     }
                 }
+            }.launchIn(this)
+        }
+    }
+
+    fun saveUser(user: User) {
+        viewModelScope.launch {
+            repository.saveUser(user).onEach {
+                _userSaved.value = EventWrapper(it)
             }.launchIn(this)
         }
     }

@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface LoginRepository {
     fun doLogin(email: String, pass: String): Flow<Response<ApiResponse<User>>>
+    fun saveUser(user: User): Flow<Boolean>
+    fun saveToken(token: String): Flow<Boolean>
 }

@@ -7,22 +7,28 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.datasource.LoginDataSourceImpl
+import com.leandroid.system.rentacarmanagement.data.repository.LoginRepository
 import com.leandroid.system.rentacarmanagement.data.repository.LoginRepositoryImpl
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.ActivityLoginBinding
 import com.leandroid.system.rentacarmanagement.model.User
 import com.leandroid.system.rentacarmanagement.ui.home.HomeActivity
+import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var viewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
-    private val repository = LoginRepositoryImpl(LoginDataSourceImpl())
+    private lateinit var repository: LoginRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        repository = LoginRepositoryImpl(LoginDataSourceImpl(
+            SharedPreferencesImpl(this)
+        ))
         setUpViewModel()
         setUpObserver()
         setUpListener()
@@ -41,25 +47,36 @@ class LoginActivity : AppCompatActivity() {
             user.observe(this@LoginActivity) { state ->
                 handleUiUser(state)
             }
+            userSaved.observe(this@LoginActivity) { saved ->
+                saved.getContentIfNotHandled().let {
+                    if(it == null || !it){
+                        handlerProgressBarVisibility(false)
+                        handlerContainerVisibility(true)
+                        showToast(getString(R.string.save_user_error))
+                    } else {
+                        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+                        finish()
+                    }
+                }
+            }
         }
+    }
+
+    private fun showToast(message: String){
+        ComponentUtils.showToast(this, message)
     }
 
     private fun handleUiUser(uiState: DataState<User>) {
         when (uiState) {
             is DataState.Success<User> -> {
                 saveUser(uiState.data)
-                handlerErrorVisibility(false)
-                handlerProgressBarVisibility(false)
-                handlerContainerVisibility(true)
-                startActivity(Intent(this, HomeActivity::class.java))
             }
             is DataState.Error -> {
-                handlerErrorVisibility(true)
                 handlerProgressBarVisibility(false)
                 handlerContainerVisibility(false)
+                showToast(getString(R.string.invalid_credentials_error))
             }
             is DataState.Loading -> {
-                handlerErrorVisibility(false)
                 handlerProgressBarVisibility(true)
                 handlerContainerVisibility(false)
             }
@@ -67,9 +84,10 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveUser(user: User){
-
+    private fun saveUser(user: User) {
+        viewModel.saveUser(user)
     }
+
     private fun handlerProgressBarVisibility(show: Boolean) {
         with(binding) {
             iProgressBar.progressBar.visibility = if (show) View.VISIBLE else View.GONE
@@ -82,27 +100,21 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun handlerErrorVisibility(show: Boolean) {
-        with(binding) {
-            iGenericError.clGenericError.visibility = if (show) View.VISIBLE else View.GONE
-        }
-    }
-
     private fun setUpListener() {
         with(binding) {
             login.setOnClickListener {
                 if (isEmailEmpty()) {
-                   username.error = getString(R.string.required_data_error)
+                    etUsername.error = getString(R.string.required_data_error)
                 } else if (isPassEmpty()) {
-                    password.error = getString(R.string.required_data_error)
+                    etPassword.error = getString(R.string.required_data_error)
                 } else {
-                    viewModel.doLogin(username.text.toString(), password.toString())
+                    viewModel.doLogin(etUsername.text.toString(), etPassword.text.toString())
                 }
             }
         }
     }
 
-    private fun isEmailEmpty() = binding.username.text.toString().isEmpty()
+    private fun isEmailEmpty() = binding.etUsername.text.toString().isEmpty()
 
-    private fun isPassEmpty() = binding.password.text.toString().isEmpty()
+    private fun isPassEmpty() = binding.etPassword.text.toString().isEmpty()
 }

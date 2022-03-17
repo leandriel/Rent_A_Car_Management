@@ -1,9 +1,10 @@
 package com.leandroid.system.rentacarmanagement.data.datasource
 
 import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
+import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferences
 import com.leandroid.system.rentacarmanagement.model.*
 
-class LoginDataSourceImpl : LoginDataSource {
+class LoginDataSourceImpl(private val sharedPreferences: SharedPreferences) : LoginDataSource {
     override fun doLogin(email: String, pass: String): ApiResponse<User> {
         return ApiResponse(
             200,
@@ -20,5 +21,13 @@ class LoginDataSourceImpl : LoginDataSource {
                 " "
             )
         )
+    }
+
+    override suspend fun saveToken(token: String): Boolean {
+        return sharedPreferences.saveToken(token)
+    }
+
+    override suspend fun saveUser(user: User): Boolean {
+        return sharedPreferences.saveUser(user)
     }
 }
