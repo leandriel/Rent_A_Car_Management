@@ -2,7 +2,7 @@ package com.leandroid.system.rentacarmanagement.model
 
 data class User(
     val id: String,
-    val email: String,
+    val userName: String,
     val type: UserType,
     val company: Company,
     val token: String,
@@ -12,4 +12,10 @@ data class User(
     val deleteDate: String
 ) {
     constructor() : this("", "", UserType(), Company(), "",false, "", "", "")
+
+    val isRequiredEmptyData: Boolean
+        get() = userName.isEmpty()
+
+
+
 }

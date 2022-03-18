@@ -72,4 +72,8 @@
     <!--LOGIN-->
     <string name="invalid_credentials_error">Credenciales invalidas, verifique sus datos</string>
     <string name="save_user_error">Problemas al guardar sus datos. Intente nuevamente.</string>
+
+    <!--USER-->
+    <string name="delete_user_message_dialog">Desea eliminar el usuario?</string>
+
 </resources>
