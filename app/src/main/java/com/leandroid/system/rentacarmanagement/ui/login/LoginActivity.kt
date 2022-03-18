@@ -6,6 +6,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.leandroid.system.rentacarmanagement.R
+import com.leandroid.system.rentacarmanagement.data.api.service.LoginService
+import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
 import com.leandroid.system.rentacarmanagement.data.datasource.LoginDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.LoginRepository
 import com.leandroid.system.rentacarmanagement.data.repository.LoginRepositoryImpl
@@ -26,9 +28,11 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        repository = LoginRepositoryImpl(LoginDataSourceImpl(
-            SharedPreferencesImpl(this)
-        ))
+        repository = LoginRepositoryImpl(
+            LoginDataSourceImpl(
+                SharedPreferencesImpl(this), LoginService(ConnectivityInterceptorImpl(this), "https://change")
+            )
+        )
         setUpViewModel()
         setUpObserver()
         setUpListener()
@@ -49,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
             }
             userSaved.observe(this@LoginActivity) { saved ->
                 saved.getContentIfNotHandled().let {
-                    if(it == null || !it){
+                    if (it == null || !it) {
                         handlerProgressBarVisibility(false)
                         handlerContainerVisibility(true)
                         showToast(getString(R.string.save_user_error))
@@ -62,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showToast(message: String){
+    private fun showToast(message: String) {
         ComponentUtils.showToast(this, message)
     }
 

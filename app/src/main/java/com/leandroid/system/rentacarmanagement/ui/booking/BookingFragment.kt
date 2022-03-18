@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.leandroid.system.rentacarmanagement.R
+import com.leandroid.system.rentacarmanagement.data.api.service.BookingService
+import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepository
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepositoryImpl
@@ -41,7 +43,13 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository = BookingRepositoryImpl(BookingDataSourceImpl(SharedPreferencesImpl(requireContext())))
+        repository = BookingRepositoryImpl(
+            BookingDataSourceImpl(
+                SharedPreferencesImpl(requireContext()), BookingService(
+                    ConnectivityInterceptorImpl(requireContext()), "https://change"
+                )
+            )
+        )
         setUpViewModel()
         setUpObserverViewModel()
     }
@@ -71,7 +79,7 @@ class BookingFragment : Fragment(), RecyclerListener {
 
     override fun onResume() {
         super.onResume()
-        getBookingsByDate( true)
+        getBookingsByDate(true)
         setDateText()
     }
 
@@ -87,7 +95,7 @@ class BookingFragment : Fragment(), RecyclerListener {
                     bookingsOrigin
                 else
                     bookingsOrigin.filter { it.car.brand.name.contains(text) }.toMutableList()
-                 bookingDetailsAdapter.addNewList(bookings as MutableList<Any>)
+                bookingDetailsAdapter.addNewList(bookings as MutableList<Any>)
             }
 
             isCreateBooking.observe(requireActivity()) { isCreate ->
@@ -101,7 +109,7 @@ class BookingFragment : Fragment(), RecyclerListener {
         }
     }
 
-    private fun setUpListener(){
+    private fun setUpListener() {
         binding.cbBooking.setOnCheckedChangeListener { _, isChecked ->
             getBookingsByDate(isChecked)
         }
@@ -110,11 +118,11 @@ class BookingFragment : Fragment(), RecyclerListener {
         }
     }
 
-    private fun getBookingsByDate(onlyAvailable: Boolean = binding.cbBooking.isChecked){
+    private fun getBookingsByDate(onlyAvailable: Boolean = binding.cbBooking.isChecked) {
         viewModel.getBookingsByDate(Date().time.toString(), onlyAvailable)
     }
 
-    private fun setDateText(){
+    private fun setDateText() {
         binding.tvDateBooking.text = dateShortFormatString(selectedDate)
     }
 

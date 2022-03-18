@@ -14,6 +14,8 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.leandroid.system.rentacarmanagement.R
+import com.leandroid.system.rentacarmanagement.data.api.service.BookingService
+import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
 import com.leandroid.system.rentacarmanagement.data.datasource.BookingDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
 import com.leandroid.system.rentacarmanagement.data.repository.BookingRepository
@@ -46,7 +48,13 @@ class BookingDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
-        repository = BookingRepositoryImpl(BookingDataSourceImpl(SharedPreferencesImpl(requireContext())))
+        repository = BookingRepositoryImpl(
+            BookingDataSourceImpl(
+                SharedPreferencesImpl(requireContext()), BookingService(
+                    ConnectivityInterceptorImpl(requireContext()), "https://change"
+                )
+            )
+        )
         setUpViewModel()
         getBundleData()
     }

@@ -1,10 +1,11 @@
 package com.leandroid.system.rentacarmanagement.data.datasource
 
+import com.leandroid.system.rentacarmanagement.data.api.service.LoginService
 import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferences
 import com.leandroid.system.rentacarmanagement.model.*
 
-class LoginDataSourceImpl(private val sharedPreferences: SharedPreferences) : LoginDataSource {
+class LoginDataSourceImpl(private val sharedPreferences: SharedPreferences, service: LoginService) : LoginDataSource {
     override fun doLogin(email: String, pass: String): ApiResponse<User> {
         return ApiResponse(
             200,
@@ -15,6 +16,7 @@ class LoginDataSourceImpl(private val sharedPreferences: SharedPreferences) : Lo
                 "l.v.bass@hotmail.com",
                 UserType("1", 1, " Admin"),
                 Company(" 1", " Rent a car 1", "sss"),
+                " ",
                 true,
                 " ",
                 " ",

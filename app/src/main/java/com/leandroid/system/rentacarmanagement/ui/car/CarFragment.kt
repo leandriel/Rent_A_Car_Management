@@ -10,6 +10,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leandroid.system.rentacarmanagement.R
+import com.leandroid.system.rentacarmanagement.data.api.service.CarService
+import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepository
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
@@ -31,7 +33,13 @@ class CarFragment : Fragment(), RecyclerListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        repository = CarRepositoryImpl(CarDataSourceImpl(SharedPreferencesImpl(requireContext())))
+        repository = CarRepositoryImpl(
+            CarDataSourceImpl(
+                SharedPreferencesImpl(requireContext()), CarService(
+                    ConnectivityInterceptorImpl(requireContext()), "https://change"
+                )
+            )
+        )
         setUpViewModel()
         setUpObserverViewModel()
     }
@@ -54,7 +62,7 @@ class CarFragment : Fragment(), RecyclerListener {
         viewModel.getCars()
     }
 
-    private fun setUpViewModel(){
+    private fun setUpViewModel() {
         viewModel = ViewModelProvider(
             requireActivity(),
             CarViewModelFactory(repository)
@@ -67,14 +75,14 @@ class CarFragment : Fragment(), RecyclerListener {
                 handleUiCars(state)
             }
         }
-        with(communicationViewModel){
+        with(communicationViewModel) {
             searchText.observe(this@CarFragment) { text ->
                 carAdapter.filterByBrand(text)
             }
 
             isCreateCar.observe(this@CarFragment) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
-                    if(it){
+                    if (it) {
                         openCarFragmentDialog()
                     }
                 }
@@ -141,7 +149,7 @@ class CarFragment : Fragment(), RecyclerListener {
     }
 
     override fun onClick(id: String) {
-      //TODO: go to details
+        //TODO: go to details
     }
 
     override fun onMenuClickEdit(id: String) {
@@ -149,8 +157,10 @@ class CarFragment : Fragment(), RecyclerListener {
     }
 
     override fun onMenuClickDelete(id: String) {
-        showDialog(requireContext(), getString(R.string.delete_car_message_dialog), getString(
-                    R.string.accept_title), getString(R.string.cancel_title)
+        showDialog(
+            requireContext(), getString(R.string.delete_car_message_dialog), getString(
+                R.string.accept_title
+            ), getString(R.string.cancel_title)
         ) {
             deleteCar(id)
         }
@@ -160,7 +170,7 @@ class CarFragment : Fragment(), RecyclerListener {
         viewModel.deleteCar(id)
     }
 
-    private fun openCarFragmentDialog(id: String = ""){
+    private fun openCarFragmentDialog(id: String = "") {
         CarDialogFragment.newInstance(id).show(parentFragmentManager, CAR_DIALOG_FRAGMENT_FLAG)
     }
 }

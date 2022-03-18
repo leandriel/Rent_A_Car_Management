@@ -10,6 +10,8 @@ import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.leandroid.system.rentacarmanagement.R
+import com.leandroid.system.rentacarmanagement.data.api.service.CarService
+import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSourceImpl
 import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepository
@@ -35,7 +37,13 @@ class CarDialogFragment : DialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.Theme_App_Dialog_FullScreen)
-        repository = CarRepositoryImpl(CarDataSourceImpl(SharedPreferencesImpl(requireContext())))
+        repository = CarRepositoryImpl(
+            CarDataSourceImpl(
+                SharedPreferencesImpl(requireContext()), CarService(
+                    ConnectivityInterceptorImpl(requireContext()), "https://change"
+                )
+            )
+        )
         setUpViewModel()
         getBundleData()
     }
@@ -67,7 +75,7 @@ class CarDialogFragment : DialogFragment() {
         viewModel.getCar(carId)
     }
 
-    private fun setUpViewModel(){
+    private fun setUpViewModel() {
         viewModel = ViewModelProvider(
             requireActivity(),
             CarViewModelFactory(repository)

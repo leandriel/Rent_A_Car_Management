@@ -86,6 +86,19 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$gsonVersion"
 
+
+    // RETROFIT
+
+    def retrofitVersion = '2.7.1'
+    def retrofitAdapterVersion = '0.9.2'
+    def okhttpVersion = '4.3.1'
+    def converterGsonVersion = '2.9.0'
+
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofitAdapterVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$converterGsonVersion"
+
     //TEST
     def junitVersion = '4.13.2'
     def junitExtVersion = '1.1.3'
