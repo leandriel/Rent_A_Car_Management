@@ -94,7 +94,7 @@ class UserFragment : Fragment(), RecyclerListener {
     private fun initRecyclerView() {
         userAdapter = UserAdapter(this)
         val linearLayoutManager = getLinearLayoutManager()
-        with(binding.rvCar) {
+        with(binding.rvUser) {
             layoutManager = linearLayoutManager
             adapter = userAdapter
             addItemDecoration(getDividerItemDecoration(linearLayoutManager))
@@ -139,7 +139,7 @@ class UserFragment : Fragment(), RecyclerListener {
 
     private fun handlerRecyclerVisibility(show: Boolean) {
         with(binding) {
-            rvCar.visibility = if (show) View.VISIBLE else View.GONE
+            rvUser.visibility = if (show) View.VISIBLE else View.GONE
         }
     }
 

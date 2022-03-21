@@ -6,17 +6,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.AdapterView
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.api.service.UserService
 import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
 import com.leandroid.system.rentacarmanagement.data.datasource.UserDataSourceImpl
+import com.leandroid.system.rentacarmanagement.data.dto.UserDTO
 import com.leandroid.system.rentacarmanagement.data.repository.UserRepository
 import com.leandroid.system.rentacarmanagement.data.repository.UserRepositoryImpl
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentUserDialogBinding
 import com.leandroid.system.rentacarmanagement.model.User
+import com.leandroid.system.rentacarmanagement.ui.car.BrandAdapter
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showToast
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
@@ -25,6 +28,7 @@ class UserDialogFragment : DialogFragment() {
     private val binding get() = _binding!!
     private lateinit var repository: UserRepository
     private lateinit var viewModel: UserViewModel
+    private lateinit var userTypeAdapter: UserTypeAdapter
     private var user = User()
     private var userId = ""
     private val isCreate: Boolean
@@ -80,7 +84,7 @@ class UserDialogFragment : DialogFragment() {
 
     private fun setUpObserverViewModel() {
         with(viewModel) {
-            user.observe(this@UserDialogFragment) { state ->
+            userDTO.observe(this@UserDialogFragment) { state ->
                 handleUiUser(state)
             }
             saveSuccess.observe(this@UserDialogFragment) { success ->
@@ -89,12 +93,12 @@ class UserDialogFragment : DialogFragment() {
                         cleanComponents()
                         showToast(
                             requireActivity(),
-                            requireActivity().getString(R.string.car_added_success)
+                            requireActivity().getString(R.string.user_added_success)
                         )
                     } else {
                         showToast(
                             requireActivity(),
-                            requireActivity().getString(R.string.car_added_error)
+                            requireActivity().getString(R.string.user_added_error)
                         )
                     }
                 }
@@ -106,12 +110,12 @@ class UserDialogFragment : DialogFragment() {
                         cleanComponents()
                         showToast(
                             requireActivity(),
-                            requireActivity().getString(R.string.car_updated_success)
+                            requireActivity().getString(R.string.user_updated_success)
                         )
                     } else {
                         showToast(
                             requireActivity(),
-                            requireActivity().getString(R.string.car_updated_error)
+                            requireActivity().getString(R.string.user_updated_error)
                         )
                     }
                 }
@@ -121,9 +125,8 @@ class UserDialogFragment : DialogFragment() {
 
     private fun cleanComponents() {
         with(binding) {
-            edModel.setText(EMPTY_STRING)
-            edPatent.setText(EMPTY_STRING)
-            edComment.setText(EMPTY_STRING)
+            edUserName.setText(EMPTY_STRING)
+            edUserName.setText(EMPTY_STRING)
             btnActions.text = requireActivity().getString(R.string.create_title)
         }
     }
@@ -134,9 +137,8 @@ class UserDialogFragment : DialogFragment() {
                 dismiss()
             }
             btnActions.setOnClickListener {
-                setModelToUser()
-                setPatentToUser()
-                setCommentToUser()
+                setUserNameToUser()
+                setPassToUser()
                 if (!user.isRequiredEmptyData) {
                     if (isCreate)
                         viewModel.saveUser(user)
@@ -152,36 +154,28 @@ class UserDialogFragment : DialogFragment() {
         }
     }
 
-    private fun setModelToUser() {
-        binding.edModel.let { ed ->
+    private fun setUserNameToUser() {
+        binding.edUserName.let { ed ->
             ed.text.toString().let {
                 it.ifEmpty {
                     ed.error = requireActivity().getString(R.string.required_data_error)
                     return@let
                 }
                 ed.error = null
-                user.model = it
+                user.userName = it
             }
         }
     }
 
-    private fun setPatentToUser() {
-        binding.edPatent.let { ed ->
+    private fun setPassToUser() {
+        binding.edPass.let { ed ->
             ed.text.toString().let {
                 it.ifEmpty {
                     ed.error = requireActivity().getString(R.string.required_data_error)
                     return@let
                 }
                 ed.error = null
-                user.patent = it
-            }
-        }
-    }
-
-    private fun setCommentToUser() {
-        binding.edComment.let { ed ->
-            ed.text.toString().let {
-                user.comment = it
+                user.pass = it
             }
         }
     }
@@ -194,59 +188,38 @@ class UserDialogFragment : DialogFragment() {
 
     private fun setUpUI() {
         with(binding) {
-//            spBrand.apply {
-//                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                    override fun onItemSelected(
-//                        parent: AdapterView<*>?,
-//                        view: View?,
-//                        position: Int,
-//                        id: Long
-//                    ) {
-//                        brandAdapter.getBrandForPosition(position).let {
-//                            car.brand = it
-//                        }
-//                    }
-//
-//                    override fun onNothingSelected(parent: AdapterView<*>?) {
-//                    }
-//                }
-//            }
-//            spColor.apply {
-//                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-//                    override fun onItemSelected(
-//                        parent: AdapterView<*>?,
-//                        view: View?,
-//                        position: Int,
-//                        id: Long
-//                    ) {
-//                        colorAdapter.getColorForPosition(position).let {
-//                            car.color = it
-//                        }
-//                    }
-//
-//                    override fun onNothingSelected(parent: AdapterView<*>?) {
-//                    }
-//                }
-//            }
+            spType.apply {
+                onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>?,
+                        view: View?,
+                        position: Int,
+                        id: Long
+                    ) {
+                        userTypeAdapter.getUserTypeForPosition(position).let {
+                            user.type = it
+                        }
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                    }
+                }
+            }
         }
     }
 
     private fun setUpSpinnerAdapter() {
-//        brandAdapter = BrandAdapter(requireActivity(), R.layout.simple_spinner_standar_item).also {
-//            binding.spBrand.adapter = it
-//        }
-//        colorAdapter = ColorAdapter(requireActivity(), R.layout.simple_spinner_standar_item).also {
-//            binding.spColor.adapter = it
-//        }
+        userTypeAdapter = UserTypeAdapter(requireActivity(), R.layout.simple_spinner_standar_item).also {
+            binding.spType.adapter = it
+        }
     }
 
     private fun handleUiUser(uiState: DataState<UserDTO>) {
         when (uiState) {
             is DataState.Success<UserDTO> -> {
-                //brandAdapter.setBrands(uiState.data.brands)
-                //colorAdapter.setColors(uiState.data.colors)
+                userTypeAdapter.setUserTypes(uiState.data.types)
                 if (!isCreate) {
-                    user = uiState.data.car
+                    user = uiState.data.user
                     setUserUI()
                 }
                 handlerErrorVisibility(false)
@@ -270,11 +243,9 @@ class UserDialogFragment : DialogFragment() {
     private fun setUserUI() {
         with(binding) {
             btnActions.text = requireActivity().getText(R.string.update_title)
-           // spBrand.setSelection(brandAdapter.getPositionByBrand(car.brand))
-           // spColor.setSelection(colorAdapter.getPositionByColor(car.color))
-            edModel.setText(user.model)
-            edPatent.setText(user.patent)
-            edComment.setText(user.comment)
+            spType.setSelection(userTypeAdapter.getPositionByUserType(user.type))
+            edUserName.setText(user.userName)
+            edPass.setText(user.pass)
         }
     }
 

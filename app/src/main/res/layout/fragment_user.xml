@@ -14,7 +14,7 @@
         layout="@layout/generic_error" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_car"
+        android:id="@+id/rv_user"
         android:layout_width="@dimen/zero_default"
         android:layout_height="@dimen/zero_default"
         app:layout_constraintTop_toTopOf="parent"

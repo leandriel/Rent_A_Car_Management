@@ -12,9 +12,9 @@
             android:id="@+id/nav_car"
             android:icon="@drawable/ic_car"
             android:title="@string/menu_cars" />
-<!--        <item-->
-<!--            android:id="@+id/nav_slideshow"-->
-<!--            android:icon="@drawable/ic_menu_slideshow"-->
-<!--            android:title="@string/menu_slideshow" />-->
+        <item
+            android:id="@+id/nav_user"
+            android:icon="@drawable/ic_user"
+            android:title="@string/menu_user" />
     </group>
 </menu>

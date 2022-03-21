@@ -31,47 +31,119 @@
             android:text="@string/create_title"
             tools:text="Save" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/ed_model"
-            android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_model"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLength="50"
+            android:hint="@string/model_title"
             android:textColor="@color/gray"
-            android:backgroundTint="@color/blue_200"
-            android:textColorHint="@color/light_gray"
-            android:hint="@string/insert_model_car"
-            app:layout_constraintBottom_toTopOf="@+id/ed_patent"
+            app:hintTextColor="@color/blue_200"
+            app:layout_constraintBottom_toTopOf="@+id/til_patent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/sp_color" />
+            app:layout_constraintTop_toBottomOf="@+id/sp_color">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/ed_patent"
-            android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_200"
+                android:maxLength="20"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/light_gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/ed_model"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:maxLength="50"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:backgroundTint="@color/blue_200"-->
+<!--            android:textColorHint="@color/light_gray"-->
+<!--            android:hint="@string/insert_model_car"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/ed_patent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/sp_color" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_patent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:hint="@string/patent_title"
             android:textColor="@color/gray"
-            android:maxLength="20"
-            android:backgroundTint="@color/blue_200"
-            android:textColorHint="@color/light_gray"
-            android:hint="@string/insert_patent_car"
-            app:layout_constraintBottom_toTopOf="@+id/ed_comment"
+            app:hintTextColor="@color/blue_200"
+            app:layout_constraintBottom_toTopOf="@+id/til_comment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_model" />
+            app:layout_constraintTop_toBottomOf="@+id/til_model" >
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/ed_comment"
-            android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_patent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_200"
+                android:maxLength="20"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/light_gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/ed_patent"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:maxLength="20"-->
+<!--            android:backgroundTint="@color/blue_200"-->
+<!--            android:textColorHint="@color/light_gray"-->
+<!--            android:hint="@string/insert_patent_car"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/ed_comment"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ed_model" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_comment"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:maxLength="80"
+            android:hint="@string/comment_title"
             android:textColor="@color/gray"
-            android:backgroundTint="@color/blue_200"
-            android:textColorHint="@color/light_gray"
-            android:hint="@string/insert_comment_car"
+            app:hintTextColor="@color/blue_200"
             app:layout_constraintBottom_toTopOf="@+id/gl_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ed_patent" />
+            app:layout_constraintTop_toBottomOf="@+id/til_patent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_200"
+                android:maxLength="20"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/light_gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/ed_comment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:maxLength="80"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:backgroundTint="@color/blue_200"-->
+<!--            android:textColorHint="@color/light_gray"-->
+<!--            android:hint="@string/insert_comment_car"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/gl_bottom"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ed_patent" />-->
 
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/btn_closed"
@@ -109,7 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/light_gray"
-            app:layout_constraintBottom_toTopOf="@+id/ed_model"
+            app:layout_constraintBottom_toTopOf="@+id/til_model"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_color_title" />

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.leandroid.system.rentacarmanagement.data.dto.UserDTO
 import com.leandroid.system.rentacarmanagement.data.repository.UserRepository
 import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.User
@@ -18,6 +19,10 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
     private val _users: MutableLiveData<DataState<MutableList<User>>> =
         MutableLiveData(DataState.Idle)
     val users: LiveData<DataState<MutableList<User>>> = _users
+
+    private val _userDTO: MutableLiveData<DataState<UserDTO>> =
+        MutableLiveData(DataState.Idle)
+    val userDTO: LiveData<DataState<UserDTO>> = _userDTO
 
     private val _user: MutableLiveData<DataState<User>> =
         MutableLiveData(DataState.Idle)

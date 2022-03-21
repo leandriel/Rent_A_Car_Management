@@ -66,6 +66,7 @@ class UserAdapter(private val listener: RecyclerListener) :
             PopupMenu(binding.root.context, view).apply {
                 inflate(R.menu.menu_popup)
                 setOnMenuItemClickListener(this@UserViewHolder)
+
                 show()
             }
         }

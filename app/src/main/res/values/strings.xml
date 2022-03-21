@@ -26,6 +26,8 @@
     <string name="cancel_title">cancelar</string>
     <string name="brand_title">Marca</string>
     <string name="color_title">Color</string>
+    <string name="model_title">Modelo</string>
+    <string name="patent_title">Patente</string>
     <string name="car_added_success">Auto adicionado correctamente</string>
     <string name="car_updated_success">Auto actualizado correctamente</string>
     <string name="car_added_error">Problemas al adicionar el auto</string>
@@ -74,6 +76,13 @@
     <string name="save_user_error">Problemas al guardar sus datos. Intente nuevamente.</string>
 
     <!--USER-->
+    <string name="menu_user">Usuario</string>
     <string name="delete_user_message_dialog">Desea eliminar el usuario?</string>
-
+    <string name="user_name_title">Nombre del usuario</string>
+    <string name="pass_title">Contraseña del usuario</string>
+    <string name="type_title">Tipo de usuario</string>
+    <string name="user_added_success">Usuario adicionado correctamente</string>
+    <string name="user_updated_success">Usuario actualizado correctamente</string>
+    <string name="user_added_error">Problemas al adicionar el usuario</string>
+    <string name="user_updated_error">Problemas al actualizar el usuario</string>
 </resources>
