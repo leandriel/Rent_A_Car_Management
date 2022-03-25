@@ -18,6 +18,7 @@ import com.leandroid.system.rentacarmanagement.data.repository.CarRepositoryImpl
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentCarBinding
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.model.User
 import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment.Companion.CAR_DIALOG_FRAGMENT_FLAG
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showDialog
@@ -171,6 +172,6 @@ class CarFragment : Fragment(), RecyclerListener {
     }
 
     private fun openCarFragmentDialog(id: String = "") {
-        CarDialogFragment.newInstance(id).show(parentFragmentManager, CAR_DIALOG_FRAGMENT_FLAG)
+        CarDialogFragment.newInstance(id, communicationViewModel.user.type.code == 3).show(parentFragmentManager, CAR_DIALOG_FRAGMENT_FLAG)
     }
 }

@@ -17,10 +17,9 @@ import com.leandroid.system.rentacarmanagement.data.repository.UserRepository
 import com.leandroid.system.rentacarmanagement.data.repository.UserRepositoryImpl
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentUserBinding
-import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.User
-import com.leandroid.system.rentacarmanagement.ui.car.CarDialogFragment.Companion.CAR_DIALOG_FRAGMENT_FLAG
 import com.leandroid.system.rentacarmanagement.ui.home.CommunicationViewModel
+import com.leandroid.system.rentacarmanagement.ui.user.UserDialogFragment.Companion.USER_DIALOG_FRAGMENT_FLAG
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showDialog
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
@@ -81,10 +80,10 @@ class UserFragment : Fragment(), RecyclerListener {
                 userAdapter.filterByBrand(text)
             }
 
-            isCreateCar.observe(this@UserFragment) { isCreate ->
+            isCreateUser.observe(this@UserFragment) { isCreate ->
                 isCreate.getContentIfNotHandled()?.let {
                     if (it) {
-                        openCarFragmentDialog()
+                        openUserFragmentDialog()
                     }
                 }
             }
@@ -154,7 +153,7 @@ class UserFragment : Fragment(), RecyclerListener {
     }
 
     override fun onMenuClickEdit(id: String) {
-        openCarFragmentDialog(id)
+        openUserFragmentDialog(id)
     }
 
     override fun onMenuClickDelete(id: String) {
@@ -171,7 +170,7 @@ class UserFragment : Fragment(), RecyclerListener {
         viewModel.deleteUser(id)
     }
 
-    private fun openCarFragmentDialog(id: String = "") {
-        UserDialogFragment.newInstance(id).show(parentFragmentManager, CAR_DIALOG_FRAGMENT_FLAG)
+    private fun openUserFragmentDialog(id: String = "") {
+        UserDialogFragment.newInstance(id).show(parentFragmentManager, USER_DIALOG_FRAGMENT_FLAG)
     }
 }

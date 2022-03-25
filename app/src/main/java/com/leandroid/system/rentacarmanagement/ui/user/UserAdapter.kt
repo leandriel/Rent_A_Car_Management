@@ -8,6 +8,7 @@ import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.databinding.ItemCarBinding
+import com.leandroid.system.rentacarmanagement.databinding.ItemUserBinding
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.User
 import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
@@ -48,18 +49,17 @@ class UserAdapter(private val listener: RecyclerListener) :
 
     inner class UserViewHolder(view: View, private val listener: RecyclerListener) :
         RecyclerView.ViewHolder(view), PopupMenu.OnMenuItemClickListener {
-        private val binding = ItemCarBinding.bind(view)
+        private val binding = ItemUserBinding.bind(view)
 
         fun bind(user: User) {
             with(binding) {
                 root.setOnClickListener {
                     showPopupMenu(it)
                 }
-
-                tvDetails.text = user.userName
-                //tvComment.text = user.comment
+                tvName.text = user.userName
+                tvPass.text = user.pass
+                tvType.text = user.type.name
             }
-//        Picasso.get().load(movie.urlImage).into(binding.movieImage)
         }
 
         private fun showPopupMenu(view: View) {

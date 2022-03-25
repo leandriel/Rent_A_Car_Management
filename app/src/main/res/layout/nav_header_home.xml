@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:id="@+id/cl_nav_header"
     android:layout_height="@dimen/nav_header_height"
     android:background="@drawable/side_nav_bar"
     android:gravity="bottom"
+    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:padding="@dimen/activity_horizontal_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_company_name"
+        android:gravity="center"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_margin="@dimen/four_dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/iv_company"
+        android:layout_width="@dimen/zero_default"
+        android:layout_height="wrap_content"
+        tools:text="username@gmail.com" />
 
-</LinearLayout>
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_company"
+        app:layout_constraintHeight_percent="0.65"
+        android:layout_width="@dimen/zero_default"
+        android:layout_height="@dimen/zero_default"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_user_name"
+        app:layout_constraintTop_toBottomOf="@id/tv_company_name"
+        android:src="@drawable/ic_company" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_user_name"
+        android:gravity="center"
+        android:layout_margin="@dimen/four_dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_company"
+        android:layout_width="@dimen/zero_default"
+        android:layout_height="wrap_content"
+        tools:text="username@gmail.com" />
+</androidx.constraintlayout.widget.ConstraintLayout>

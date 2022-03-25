@@ -31,6 +31,7 @@ class CarDialogFragment : DialogFragment() {
     private lateinit var colorAdapter: ColorAdapter
     private var car = Car()
     private var carId = ""
+    private var isUserOnlyRead = false
     private val isCreate: Boolean
         get() = carId.isEmpty()
 
@@ -46,6 +47,7 @@ class CarDialogFragment : DialogFragment() {
         )
         setUpViewModel()
         getBundleData()
+        setEnableByTypeUser()
     }
 
     override fun onCreateView(
@@ -193,6 +195,7 @@ class CarDialogFragment : DialogFragment() {
     private fun getBundleData() {
         arguments?.let {
             carId = it.getString(CAR_ID_KEY, EMPTY_STRING)
+            isUserOnlyRead = it.getBoolean(CAR_USER_TYPE_KEY, false)
         }
     }
 
@@ -282,10 +285,16 @@ class CarDialogFragment : DialogFragment() {
         }
     }
 
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        _binding = null
-//    }
+    private fun setEnableByTypeUser() {
+        with(binding) {
+            btnActions.visibility = if(isUserOnlyRead) View.INVISIBLE else View.VISIBLE
+            spBrand.isEnabled = !isUserOnlyRead
+            spColor.isEnabled = !isUserOnlyRead
+            edModel.isEnabled = !isUserOnlyRead
+            edPatent.isEnabled = !isUserOnlyRead
+            edComment.isEnabled = !isUserOnlyRead
+        }
+    }
 
     private fun handlerProgressBarVisibility(show: Boolean) {
         with(binding) {
@@ -310,9 +319,10 @@ class CarDialogFragment : DialogFragment() {
     }
 
     companion object {
-        fun newInstance(id: String): CarDialogFragment {
+        fun newInstance(id: String, isOnlyRead: Boolean): CarDialogFragment {
             Bundle().apply {
-                putString(CAR_ID_KEY, id);
+                putString(CAR_ID_KEY, id)
+                putBoolean(CAR_USER_TYPE_KEY, isOnlyRead)
             }.also { b ->
                 return CarDialogFragment().apply {
                     arguments = b
@@ -321,6 +331,7 @@ class CarDialogFragment : DialogFragment() {
         }
 
         const val CAR_ID_KEY = "car_id_key"
+        const val CAR_USER_TYPE_KEY = "car_user_type_key"
         const val CAR_DIALOG_FRAGMENT_FLAG = "car_dialog_fragment_flag"
         const val EMPTY_STRING = ""
     }

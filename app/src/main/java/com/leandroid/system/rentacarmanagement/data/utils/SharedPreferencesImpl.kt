@@ -7,17 +7,17 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl.PreferencesKeys.TOKEN_KEY
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl.PreferencesKeys.USER_KEY
 import com.leandroid.system.rentacarmanagement.model.User
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import java.lang.Exception
+import kotlinx.coroutines.flow.*
+
+private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "rent_a_car_data")
 
 class SharedPreferencesImpl(private val context: Context) : SharedPreferences {
-    private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = FILE_NAME)
+    //private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = FILE_NAME)
 
-    // Gson().fromJson(cityJson, CityModel::class.java)
     override suspend fun saveUser(user: User): Boolean {
         return try {
             val userJson = Gson().toJson(user)
@@ -43,11 +43,23 @@ class SharedPreferencesImpl(private val context: Context) : SharedPreferences {
         }
     }
 
-    override suspend fun getUser(): Flow<String> {
-        return getDataStore().data
-            .map { preferences ->
-                preferences[USER_KEY] ?: ""
-            }
+    override suspend fun getUser(): Flow<User?> {
+        try {
+            val  a =  getDataStore().data
+                .map { preferences ->
+                    val json = preferences[USER_KEY] ?: ""
+                    try {
+                        Gson().fromJson(json, User::class.java)
+                    } catch (e: JsonSyntaxException ){
+                        e.printStackTrace()
+                        null
+                    }
+                }
+            return a
+        } catch (e: java.lang.Exception){
+            print(e)
+            return flow {  null }
+        }
     }
 
     override suspend fun getToken(): Flow<String> {

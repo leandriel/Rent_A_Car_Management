@@ -8,6 +8,7 @@ import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
 import com.leandroid.system.rentacarmanagement.data.repository.CarRepository
 import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.Car
+import com.leandroid.system.rentacarmanagement.model.User
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 import com.leandroid.system.rentacarmanagement.ui.utils.EventWrapper
 import kotlinx.coroutines.flow.launchIn
@@ -26,6 +27,7 @@ class CarViewModel(private val repository: CarRepository) : ViewModel() {
 
     private val _saveSuccess = MutableLiveData<EventWrapper<Boolean>>()
     val saveSuccess: LiveData<EventWrapper<Boolean>> = _saveSuccess
+
     private val _updateSuccess = MutableLiveData<EventWrapper<Boolean>>()
     val updateSuccess: LiveData<EventWrapper<Boolean>> = _updateSuccess
 

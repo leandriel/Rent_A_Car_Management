@@ -1,5 +1,6 @@
 package com.leandroid.system.rentacarmanagement.data.datasource
 
+import androidx.datastore.preferences.preferencesDataStore
 import com.leandroid.system.rentacarmanagement.data.api.service.CarService
 import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
 import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
@@ -7,6 +8,9 @@ import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferences
 import com.leandroid.system.rentacarmanagement.model.Brand
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.Color
+import com.leandroid.system.rentacarmanagement.model.User
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 class CarDataSourceImpl(private val sharedPreferences: SharedPreferences, service: CarService): CarDataSource {
     private val cars = mutableListOf<Car>(Car("1","asd321","ka",Brand("brandID","brandName"),true, Color("1", "rojo"),"asdasd"))
@@ -44,4 +48,6 @@ class CarDataSourceImpl(private val sharedPreferences: SharedPreferences, servic
         }
         return ApiResponse(200, true, "Autos", cars)
     }
+
+    override fun getUser(): Flow<String> = flow { sharedPreferences.getUser() }
 }
