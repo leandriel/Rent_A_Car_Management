@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/four_dp">
+
+    <ImageView
+        android:id="@+id/image_car"
+        android:layout_width="@dimen/zero_default"
+        android:layout_height="@dimen/zero_default"
+        android:contentDescription="@string/image_description"
+        android:src="@drawable/ic_car"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_details"
+        app:layout_constraintEnd_toEndOf="@+id/gl_image"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_details" />
+
+    <TextView
+        android:id="@+id/tv_details"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/four_dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/i_btn_menu"
+        app:layout_constraintStart_toEndOf="@+id/gl_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="FORD AZUL - ZZX-001" />
+
+    <TextView
+        android:id="@+id/tv_state"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:textColor="@color/teal_700"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/i_btn_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_details"
+        app:layout_constraintBottom_toTopOf="@+id/i_sub_booking"
+        tools:text="DISPONIBLE" />
+
+    <TextView
+        android:id="@+id/tv_next_booking"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:padding="@dimen/four_dp"
+        android:textColor="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/i_btn_menu"
+        app:layout_constraintStart_toEndOf="@id/gl_image"
+        app:layout_constraintTop_toBottomOf="@id/i_sub_booking"
+        tools:text="Proxima reserva: 20/02/2022 " />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/i_btn_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/four_dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/ic_popup_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_next_booking"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.10" />
+
+    <include
+        android:id="@+id/i_sub_booking"
+        layout="@layout/item_sub_booking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/i_btn_menu"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_state" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+

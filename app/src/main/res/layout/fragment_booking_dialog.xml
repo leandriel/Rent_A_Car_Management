@@ -1,0 +1,486 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/twelve_dp"
+    android:paddingTop="@dimen/twenty_four_dp"
+    android:paddingEnd="@dimen/twelve_dp"
+    android:paddingBottom="@dimen/twenty_four_dp"
+    tools:context=".ui.car.CarDialogFragment">
+
+    <ScrollView
+        android:id="@+id/sv_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/dialog_borde"
+            android:padding="@dimen/twenty_dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_actions"
+                style="@style/AppTheme.Button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/twenty_four_dp"
+                android:text="@string/create_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_comment"
+                tools:text="Save" />
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/btn_closed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_close_clear_cancel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="spread_inside" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_booking"
+                android:layout_width="@dimen/zero_default"
+                android:layout_height="@dimen/zero_default"
+                android:src="@drawable/ic_booking"
+                android:tint="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/gl_top"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/sp_car"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:backgroundTint="@color/light_gray"
+                app:layout_constraintBottom_toTopOf="@+id/ll_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_percent="0.06"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_car_title" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_car_title"
+                style="@style/TextAppearance.AppCompat.Body2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_500"
+                android:padding="@dimen/four_dp"
+                android:text="@string/car_title"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toTopOf="@+id/sp_car"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/gl_top" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linear_borde"
+                android:orientation="horizontal"
+                android:padding="@dimen/six_dp"
+                app:layout_constraintBottom_toTopOf="@+id/til_driving_licence"
+                app:layout_constraintEnd_toStartOf="@+id/til_fly"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/sp_car">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_date"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    tools:text="22/09/2200 - 22/10/2022" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/ed_driving_licence"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sp_car">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btn_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_booking"
+                        android:tint="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_title_date"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:text="@string/date_ranger"
+                        android:textColor="@color/white" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_delivery"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linear_borde"
+                android:orientation="horizontal"
+                android:padding="@dimen/six_dp"
+                app:layout_constraintBottom_toTopOf="@+id/til_delivery_place"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_hotel">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_delivery"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    tools:text="22/09/2200 - 22/10/2022" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/ed_driving_licence"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sp_car">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btn_delivery"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_booking"
+                        android:tint="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_title_delivery"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/delivery_date"
+                        android:textColor="@color/white" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_return"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/linear_borde"
+                android:orientation="horizontal"
+                android:padding="@dimen/six_dp"
+                app:layout_constraintBottom_toTopOf="@+id/til_return_place"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_delivery_place">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_return"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="2"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/white"
+                    tools:text="22/09/2200 - 22/10/2022" />
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toTopOf="@+id/ed_driving_licence"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/sp_car">
+
+                    <androidx.appcompat.widget.AppCompatImageButton
+                        android:id="@+id/btn_return"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:src="@drawable/ic_booking"
+                        android:tint="@color/white" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_title_return"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:gravity="center_vertical"
+                        android:text="@string/return_date"
+                        android:textColor="@color/white" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.2" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/gl_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.8" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_fly"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/fly_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/til_hotel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/til_driving_licence"
+                app:layout_constraintTop_toBottomOf="@+id/ll_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_fly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="20"
+                    android:textColor="@color/gray"
+                    android:textColorHint="@color/light_gray" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_comment"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/comment_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/btn_actions"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_price">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="80"
+                    android:textColor="@color/gray"
+                    app:hintTextColor="@color/blue_200"
+                    app:layout_constraintBottom_toTopOf="@+id/gl_bottom"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_commission" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_hotel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hotel_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/ll_delivery"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_driving_licence">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_hotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="50"
+                    android:textColor="@color/gray"
+                    app:hintTextColor="@color/blue_200"
+                    app:layout_constraintBottom_toTopOf="@+id/ll_delivery"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_fly" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_return_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/return_place_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@id/til_price"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_return">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_return_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="70"
+                    android:textColor="@color/gray"
+                    app:hintTextColor="@color/blue_200"
+                    app:layout_constraintBottom_toTopOf="@+id/ed_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_return" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_delivery_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/delivery_place_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/ll_return"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_delivery">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_delivery_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="70"
+                    android:textColor="@color/gray"
+                    app:hintTextColor="@color/blue_200"
+                    app:layout_constraintBottom_toTopOf="@+id/ed_price"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ll_return" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/price_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/til_comment"
+                app:layout_constraintEnd_toStartOf="@+id/til_commission"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/til_return_place">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="15"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/gray"
+                    app:hintTextColor="@color/blue_200"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_return_place" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_commission"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/commission_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/til_comment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/til_price"
+                app:layout_constraintTop_toBottomOf="@+id/til_return_place">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_commission"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="15"
+                    android:lines="1"
+                    android:inputType="numberDecimal"
+                    android:textColor="@color/gray"
+                    app:hintTextColor="@color/blue_200"
+                    app:layout_constraintBottom_toTopOf="@+id/ed_comment"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ed_price" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_driving_licence"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/licence_title"
+                android:textColor="@color/gray"
+                app:hintTextColor="@color/blue_200"
+                app:layout_constraintBottom_toTopOf="@+id/til_hotel"
+                app:layout_constraintEnd_toStartOf="@+id/til_fly"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ll_date">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/ed_driving_licence"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:backgroundTint="@color/blue_200"
+                    android:maxLength="20"
+                    android:textColor="@color/gray" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <include
+        android:id="@+id/i_generic_error"
+        layout="@layout/generic_error" />
+
+    <include
+        android:id="@+id/i_progress_bar"
+        layout="@layout/progress_bar" />
+</FrameLayout>

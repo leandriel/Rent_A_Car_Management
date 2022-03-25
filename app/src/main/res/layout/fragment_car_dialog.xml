@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/twelve_dp"
+    android:paddingTop="@dimen/twenty_four_dp"
+    android:paddingEnd="@dimen/twelve_dp"
+    android:paddingBottom="@dimen/twenty_four_dp"
+    tools:context=".ui.car.CarDialogFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/dialog_borde"
+        android:padding="@dimen/twenty_dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_actions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/twenty_four_dp"
+            android:layout_marginStart="@dimen/twenty_four_dp"
+            style="@style/AppTheme.Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/gl_bottom"
+            android:text="@string/create_title"
+            tools:text="Save" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_model"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/model_title"
+            android:textColor="@color/gray"
+            app:hintTextColor="@color/blue_200"
+            app:layout_constraintBottom_toTopOf="@+id/til_patent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sp_color">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_model"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_200"
+                android:maxLength="20"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/light_gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/ed_model"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:maxLength="50"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:backgroundTint="@color/blue_200"-->
+<!--            android:textColorHint="@color/light_gray"-->
+<!--            android:hint="@string/insert_model_car"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/ed_patent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/sp_color" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_patent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/patent_title"
+            android:textColor="@color/gray"
+            app:hintTextColor="@color/blue_200"
+            app:layout_constraintBottom_toTopOf="@+id/til_comment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_model" >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_patent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_200"
+                android:maxLength="20"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/light_gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/ed_patent"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:maxLength="20"-->
+<!--            android:backgroundTint="@color/blue_200"-->
+<!--            android:textColorHint="@color/light_gray"-->
+<!--            android:hint="@string/insert_patent_car"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/ed_comment"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ed_model" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_comment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/comment_title"
+            android:textColor="@color/gray"
+            app:hintTextColor="@color/blue_200"
+            app:layout_constraintBottom_toTopOf="@+id/gl_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_patent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/ed_comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:backgroundTint="@color/blue_200"
+                android:maxLength="20"
+                android:textColor="@color/gray"
+                android:textColorHint="@color/light_gray" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <androidx.appcompat.widget.AppCompatEditText-->
+<!--            android:id="@+id/ed_comment"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:maxLength="80"-->
+<!--            android:textColor="@color/gray"-->
+<!--            android:backgroundTint="@color/blue_200"-->
+<!--            android:textColorHint="@color/light_gray"-->
+<!--            android:hint="@string/insert_comment_car"-->
+<!--            app:layout_constraintBottom_toTopOf="@+id/gl_bottom"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/ed_patent" />-->
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_closed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread_inside" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_car"
+            android:layout_width="@dimen/zero_default"
+            android:layout_height="@dimen/zero_default"
+            android:src="@drawable/ic_car"
+            android:tint="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/gl_top"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_gray"
+            app:layout_constraintBottom_toTopOf="@+id/tv_color_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_brand_title" />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/sp_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/light_gray"
+            app:layout_constraintBottom_toTopOf="@+id/til_model"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_color_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_brand_title"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:padding="@dimen/four_dp"
+            android:background="@color/blue_200"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content"
+            android:text="@string/brand_title"
+            app:layout_constraintBottom_toTopOf="@+id/sp_brand"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gl_top" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_color_title"
+            style="@style/TextAppearance.AppCompat.Body2"
+            android:layout_width="0dp"
+            android:padding="@dimen/four_dp"
+            android:background="@color/blue_200"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="@string/color_title"
+            app:layout_constraintBottom_toTopOf="@+id/sp_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sp_brand" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.2" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.8" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/i_generic_error"
+        layout="@layout/generic_error" />
+
+    <include
+        android:id="@+id/i_progress_bar"
+        layout="@layout/progress_bar" />
+</FrameLayout>

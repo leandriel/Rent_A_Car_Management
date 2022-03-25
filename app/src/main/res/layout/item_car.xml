@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.20"
+        android:orientation="vertical"/>
+
+    <ImageView
+        android:id="@+id/image_car"
+        android:layout_width="@dimen/zero_default"
+        android:layout_height="@dimen/zero_default"
+        android:src="@drawable/ic_car"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/gl_image"
+        android:contentDescription="@string/image_description" />
+
+    <TextView
+        android:id="@+id/tv_details"
+        android:padding="@dimen/four_dp"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/tv_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gl_image"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="FORD AZUL - ZZX-001" />
+
+    <TextView
+        android:id="@+id/tv_comment"
+        android:layout_width="0dp"
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:ellipsize="end"
+        android:padding="@dimen/four_dp"
+        android:textColor="@color/light_gray"
+        android:layout_height="wrap_content"
+        tools:text="Hola soy un comentario"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/gl_image"
+        app:layout_constraintTop_toBottomOf="@id/tv_details" />
+
+<!--    <androidx.appcompat.widget.AppCompatImageButton-->
+<!--        android:id="@+id/i_btn_menu"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:src="@drawable/ic_popup_menu"-->
+<!--        android:layout_marginEnd="@dimen/four_dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/tv_comment"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"/>-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
