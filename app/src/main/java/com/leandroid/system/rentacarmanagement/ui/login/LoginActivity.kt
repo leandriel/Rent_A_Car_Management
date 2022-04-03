@@ -5,6 +5,8 @@ import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.BuildConfig
+import com.leandroid.system.rentacarmanagement.BuildConfig.SERVER_URL
 import com.leandroid.system.rentacarmanagement.R
 import com.leandroid.system.rentacarmanagement.data.api.service.LoginService
 import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptorImpl
@@ -30,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         repository = LoginRepositoryImpl(
             LoginDataSourceImpl(
-                SharedPreferencesImpl(this), LoginService(ConnectivityInterceptorImpl(this), "https://change")
+                SharedPreferencesImpl(this), LoginService(ConnectivityInterceptorImpl(this), com.leandroid.system.rentacarmanagement.BuildConfig.SERVER_URL)
             )
         )
         setUpViewModel()
@@ -77,7 +79,7 @@ class LoginActivity : AppCompatActivity() {
             }
             is DataState.Error -> {
                 handlerProgressBarVisibility(false)
-                handlerContainerVisibility(false)
+                handlerContainerVisibility(true)
                 showToast(getString(R.string.invalid_credentials_error))
             }
             is DataState.Loading -> {

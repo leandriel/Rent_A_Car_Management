@@ -3,7 +3,7 @@ package com.leandroid.system.rentacarmanagement.data.api.service
 import com.leandroid.system.rentacarmanagement.data.api.Retrofit
 import com.leandroid.system.rentacarmanagement.data.api.utils.ConnectivityInterceptor
 import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
-import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
+import com.leandroid.system.rentacarmanagement.data.api.response.ApiResponse
 import com.leandroid.system.rentacarmanagement.model.Booking
 import com.leandroid.system.rentacarmanagement.model.BookingDetails
 import retrofit2.http.*

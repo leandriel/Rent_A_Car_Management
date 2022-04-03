@@ -4,7 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.leandroid.system.rentacarmanagement.data.datasource.CarDataSource
 import com.leandroid.system.rentacarmanagement.data.dto.CarDTO
-import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
+import com.leandroid.system.rentacarmanagement.data.api.response.ApiResponse
 import com.leandroid.system.rentacarmanagement.data.utils.Response
 import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.User

@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.leandroid.system.rentacarmanagement.R
-import com.leandroid.system.rentacarmanagement.databinding.ItemCarBinding
 import com.leandroid.system.rentacarmanagement.databinding.ItemUserBinding
-import com.leandroid.system.rentacarmanagement.model.Car
 import com.leandroid.system.rentacarmanagement.model.User
 import com.leandroid.system.rentacarmanagement.ui.utils.RecyclerListener
 
@@ -57,7 +55,7 @@ class UserAdapter(private val listener: RecyclerListener) :
                     showPopupMenu(it)
                 }
                 tvName.text = user.userName
-                tvPass.text = user.pass
+                tvPass.text = user.password
                 tvType.text = user.type.name
             }
         }

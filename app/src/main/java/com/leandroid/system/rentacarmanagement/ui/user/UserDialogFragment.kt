@@ -19,7 +19,6 @@ import com.leandroid.system.rentacarmanagement.data.repository.UserRepositoryImp
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferencesImpl
 import com.leandroid.system.rentacarmanagement.databinding.FragmentUserDialogBinding
 import com.leandroid.system.rentacarmanagement.model.User
-import com.leandroid.system.rentacarmanagement.ui.car.BrandAdapter
 import com.leandroid.system.rentacarmanagement.ui.utils.ComponentUtils.showToast
 import com.leandroid.system.rentacarmanagement.ui.utils.DataState
 
@@ -175,7 +174,7 @@ class UserDialogFragment : DialogFragment() {
                     return@let
                 }
                 ed.error = null
-                user.pass = it
+                user.password = it
             }
         }
     }
@@ -245,7 +244,7 @@ class UserDialogFragment : DialogFragment() {
             btnActions.text = requireActivity().getText(R.string.update_title)
             spType.setSelection(userTypeAdapter.getPositionByUserType(user.type))
             edUserName.setText(user.userName)
-            edPass.setText(user.pass)
+            edPass.setText(user.password)
         }
     }
 

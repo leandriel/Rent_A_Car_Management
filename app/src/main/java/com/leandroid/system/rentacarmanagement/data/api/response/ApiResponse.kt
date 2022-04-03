@@ -1,5 +1,8 @@
-package com.leandroid.system.rentacarmanagement.data.utils
+package com.leandroid.system.rentacarmanagement.data.api.response
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class ApiResponse<T>(
     val code: Int,
     val success: Boolean,

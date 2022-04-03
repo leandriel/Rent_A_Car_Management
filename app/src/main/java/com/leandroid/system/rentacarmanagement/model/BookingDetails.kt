@@ -2,8 +2,12 @@ package com.leandroid.system.rentacarmanagement.model
 
 import com.leandroid.system.rentacarmanagement.ui.utils.CarStateAvailable
 import com.leandroid.system.rentacarmanagement.ui.utils.ExpandableRecyclerViewAdapter
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class BookingDetails(
+    @Json(name = "_id")
     val id: String,
     val car: Car,
     val bookings: MutableList<Booking>

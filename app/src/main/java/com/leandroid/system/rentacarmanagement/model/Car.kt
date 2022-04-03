@@ -1,6 +1,11 @@
 package com.leandroid.system.rentacarmanagement.model
 
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 data class Car(
+    @Json(name = "_id")
     val id: String,
     var patent: String,
     var model: String,

@@ -2,7 +2,7 @@ package com.leandroid.system.rentacarmanagement.data.datasource
 
 import com.leandroid.system.rentacarmanagement.data.api.service.BookingService
 import com.leandroid.system.rentacarmanagement.data.dto.BookingDTO
-import com.leandroid.system.rentacarmanagement.data.utils.ApiResponse
+import com.leandroid.system.rentacarmanagement.data.api.response.ApiResponse
 import com.leandroid.system.rentacarmanagement.data.utils.SharedPreferences
 import com.leandroid.system.rentacarmanagement.model.*
 import java.util.*

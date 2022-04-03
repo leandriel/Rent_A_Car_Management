@@ -1,8 +1,12 @@
 package com.leandroid.system.rentacarmanagement.model
 
 import com.leandroid.system.rentacarmanagement.ui.utils.DateTimeUtils.dateShortFormatString
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 data class Booking(
+    @Json(name = "_id")
     var id: String,
     var car: Car,
     var fly: String,

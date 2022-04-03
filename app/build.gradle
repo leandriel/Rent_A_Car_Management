@@ -17,7 +17,12 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "SERVER_URL", "\"http://10.0.2.2:3005/oapi/\""
+        }
         release {
+            buildConfigField "String", "SERVER_URL", "\"http://dev.myserver.com\""
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -87,7 +92,6 @@ dependencies {
 
     implementation "com.google.code.gson:gson:$gsonVersion"
 
-
     // RETROFIT
     def retrofitVersion = '2.7.1'
     def retrofitAdapterVersion = '0.9.2'
@@ -98,6 +102,14 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$retrofitAdapterVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation "com.squareup.retrofit2:converter-gson:$converterGsonVersion"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
+
+
+    def moshiVersion = '1.9.3'
+
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
+    annotationProcessor "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
 
     // GLIDE
     def glideVersion = '4.13.0'
